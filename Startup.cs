@@ -24,6 +24,16 @@ namespace MaxPizzaProject
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+        
+            services.AddWebOptimizer(pipeline =>
+            {
+                pipeline.AddScssBundle("css/main.css", "sass/style.scss");
+
+                //pipeline.AddScssBundle("css/a.css", "sass/style.scss");
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,11 +43,13 @@ namespace MaxPizzaProject
             {
                 app.UseDeveloperExceptionPage();
             }
-           
+
+            app.UseWebOptimizer();
 
             app.UseStaticFiles();
 
             app.UseRouting();
+
 
             app.UseAuthorization();
 
