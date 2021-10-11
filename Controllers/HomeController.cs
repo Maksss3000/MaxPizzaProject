@@ -13,5 +13,12 @@ namespace MaxPizzaProject.Controllers
         {
             return View();
         }
+
+
+        public IActionResult OrderOwnPizza()
+        {
+            ViewBag.Title = "OrderOwnPizza";
+            return View();
+        }
     }
 }

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,11 +27,14 @@ namespace MaxPizzaProject
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+            //Adding Connection to My Database.(MaxPizzaStore db).
+            string connString = "ConnectionStrings:PizzeriaStoreConnection";
+            services.AddDbContext<PizzeriaDbContext>(opts => opts.UseSqlServer(Configuration[connString]));
+
             /*By WebOptimizer we can optimize our .css code.
             In link we will use main.css file , but in fact this file
             are  optimized style.scss file.
             */
-
             services.AddWebOptimizer(pipeline =>
             {
                 pipeline.AddScssBundle("css/main.css", "sass/style.scss");
