@@ -13,6 +13,12 @@ namespace MaxPizzaProject.Models
 
         }
 
+        public DbSet<Pizza> Pizzas { get; set; } 
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Size> Sizes { get; set; }
+
+        public DbSet<Price> Prices { get; set; }
     }
 }
