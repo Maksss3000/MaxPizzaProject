@@ -29,6 +29,7 @@ namespace MaxPizzaProject
             In link we will use main.css file , but in fact this file
             are  optimized style.scss file.
             */
+
             services.AddWebOptimizer(pipeline =>
             {
                 pipeline.AddScssBundle("css/main.css", "sass/style.scss");
