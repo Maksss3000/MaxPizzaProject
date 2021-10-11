@@ -22,15 +22,17 @@ namespace MaxPizzaProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
-        
+            /*By WebOptimizer we can optimize our .css code.
+            In link we will use main.css file , but in fact this file
+            are  optimized style.scss file.
+            */
             services.AddWebOptimizer(pipeline =>
             {
                 pipeline.AddScssBundle("css/main.css", "sass/style.scss");
 
-                //pipeline.AddScssBundle("css/a.css", "sass/style.scss");
             });
 
 
