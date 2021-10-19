@@ -26,6 +26,7 @@ namespace MaxPizzaProject
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.AddServerSideBlazor();
 
             //Adding Connection to My Database.(MaxPizzaStore db).
             string connString = "ConnectionStrings:PizzeriaStoreConnection";
@@ -70,6 +71,7 @@ namespace MaxPizzaProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapBlazorHub();
             });
 
             SeedData.Seed(ctx);

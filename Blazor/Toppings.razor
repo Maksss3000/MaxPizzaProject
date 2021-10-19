@@ -1,0 +1,119 @@
+﻿
+<div class="p-3 intr text-info">
+    Choose Size:
+    @foreach (Size s in SelectedPizza.Category.Sizes)
+    {
+        <button class="btn btn-primary" 
+                @onclick="@(()=>ChangePizzaSize(s.Id,SelectedPizza.CategoryId,s.TheSize))">
+           @s.TheSize
+        </button>
+    }
+    @if (PizzaPrice != 0)
+    {
+        <div class="intr  text-info">
+            Price: @PizzaPrice.ToString("c")
+        </div>
+    }
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="intr  text-info" scope="col">Categories</th>
+            <th class="intr  text-info" scope="col">Topping Prices</th>
+            <th class="intr text-info" scope="col">Pizza Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Category c in ToppCategories)
+        {
+            <tr>
+                <th class="intr  text-info" scope="row">
+                    <button class="btn btn-primary" @onclick="@(e=>SeeToppings(e,c.Id))">
+                    @c.Name
+                    </button>
+                </th>
+
+                <th class="intr text-info">
+                    @if (ToppingPrice(c.Id, PizzaSizeId)!=0)
+                    {
+                        @ToppPrice
+                    }
+
+
+                </th>
+
+                <th class="intr text-info">
+                    @PizzaSize
+                </th>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+@if (ToppingsOfSpecCategory != null)
+{
+    <div>
+        <ul>
+            @foreach (Topping t in ToppingsOfSpecCategory)
+            {
+
+                <li class=" intr text-success">
+                    @t.Name
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+
+@code{
+
+
+    [Inject]
+    public IToppingRepository ToppContext { get; set; }
+
+    [Inject]
+    public IPizzaRepository PizzaContext { get; set; }
+
+    public decimal PizzaPrice { get; set; }
+
+    public long PizzaSizeId { get; set; }
+
+    public string PizzaSize { get; set; }
+
+
+    public void ChangePizzaSize(long sizeId,long categoryId,string pizzaSize)
+    {
+        PizzaPrice= PizzaContext.GetPizzaPrice(sizeId, categoryId);
+        PizzaSize = pizzaSize;
+        PizzaSizeId = sizeId;
+    }
+
+    [Parameter]
+    public long PizzaId { get; set; }
+
+    public Pizza SelectedPizza => PizzaContext.GetPizzaById(PizzaId);
+
+    public decimal ToppPrice { get; set; } = 0;
+
+    public IEnumerable<Category> ToppCategories => ToppContext.GetToppCategories();
+
+
+    IEnumerable<Topping> ToppingsOfSpecCategory { get; set; }
+
+    public IEnumerable<Topping> SeeToppings(MouseEventArgs e, long catId)
+    {
+        ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(catId);
+        return ToppingsOfSpecCategory;
+    }
+
+    public decimal ToppingPrice(long toppCatId,long sizeId)
+    {
+        ToppPrice = ToppContext.GetToppPrice(toppCatId,sizeId);
+        return ToppPrice;
+    }
+
+}

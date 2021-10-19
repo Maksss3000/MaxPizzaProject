@@ -13,6 +13,7 @@ namespace MaxPizzaProject.Models
 
         public Dictionary<long, decimal> GetToppingPrice (IEnumerable<long> ids, long sizeId);
 
+        public decimal GetToppPrice(long toppCatId, long sizeId);
         public IEnumerable<Category> GetToppCategories();
 
         public IEnumerable<Topping> GetToppingsByCategory(long catId);

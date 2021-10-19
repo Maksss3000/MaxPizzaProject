@@ -56,6 +56,14 @@ namespace MaxPizzaProject.Models
             return priceDict;
         }
 
+        public decimal GetToppPrice(long toppCatId, long sizeId)
+        {
+            decimal price = context.CategoriesSizes.Where(c => c.CategoryId == toppCatId).
+                     Where(s => s.SizeId == sizeId).
+                     Select(p => p.Price).FirstOrDefault();
+
+            return price;
+        }
     }
 }
 

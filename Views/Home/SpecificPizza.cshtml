@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                
+                @*
                 <div class="p-3 intr text-info">
                      Choose Size:
                     @foreach (var s in Model.Category.Sizes)
@@ -35,11 +35,18 @@
                 <div class="intr  text-info">Price: @ViewBag.Price.ToString("c")</div>
                   
                 </div>
-
+                    *@
             </div>
+                    
             <div class="col-4 mt-2">
                
-                <vc:toppings/>
+              
+                 @*  
+                  Without Blazor.
+                 <vc:toppings/>
+                  *@
+                <component type="typeof(MaxPizzaProject.Blazor.Toppings)" 
+                           param-pizzaid="Model.Id"  render-mode="Server" />
 
             </div>
         </div>
