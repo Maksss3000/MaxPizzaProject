@@ -31,6 +31,10 @@ namespace MaxPizzaProject
             string connString = "ConnectionStrings:PizzeriaStoreConnection";
             services.AddDbContext<PizzeriaDbContext>(opts => opts.UseSqlServer(Configuration[connString]));
 
+            services.AddScoped<IToppingRepository, EFToppingRepository>();
+            services.AddScoped<IPizzaRepository, EFPizzaRepository>();
+            services.AddScoped<ISizeRepository, EFSizeRepository>();
+
             /*By WebOptimizer we can optimize our .css code.
             In link we will use main.css file , but in fact this file
             are  optimized style.scss file.
@@ -38,6 +42,7 @@ namespace MaxPizzaProject
             services.AddWebOptimizer(pipeline =>
             {
                 pipeline.AddScssBundle("css/main.css", "sass/style.scss");
+               
 
             });
 
@@ -45,7 +50,8 @@ namespace MaxPizzaProject
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+                              PizzeriaDbContext ctx)
         {
             if (env.IsDevelopment())
             {
@@ -65,6 +71,8 @@ namespace MaxPizzaProject
             {
                 endpoints.MapDefaultControllerRoute();
             });
+
+            SeedData.Seed(ctx);
         }
     }
 }

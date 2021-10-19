@@ -18,10 +18,15 @@
 }
 
 .pizza {
-    min-height: 1080px;
+
+    min-height: 900px;
     background: url(/img/mainPageBackground/BackGroundImg.jpg) center center/cover no-repeat
 }
+.blue {
 
+    min-height: 900px;
+    background: url(/img/mainPageBackground/blue.jpg) center center/cover no-repeat
+}
 .pizza .container {
     padding-top: 120px
 }
@@ -71,7 +76,7 @@
 }
 
 .pizza .btn_round {
-    dispay: flex;
+    //dispay: flex;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;

@@ -1,0 +1,51 @@
+﻿@model Pizza
+@{ 
+    
+}
+<div class="pizza">
+    <div class="bg-primary intr text-center p-3">@Model.Name</div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="img_rad">
+
+                    <div>
+                        
+                            <img class="round"
+                                 src="/@Model.ImagePath"
+                                 alt="pizza" />
+                        
+                        <div class="p-3 intro text-info">
+                            @Model.Description
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="p-3 intr text-info">
+                     Choose Size:
+                    @foreach (var s in Model.Category.Sizes)
+                    {
+                        <a asp-action="SpecificPizza" 
+                           asp-route-sizeId="@s.Id"
+                           asp-route-toppCatId="@ViewBag.CatId"
+                           class="btn intr  @(s.Id==ViewBag.SizeId ? " btn-primary ":"btn-outline-secondary")">@s.TheSize</a>
+                    }
+                <div class="intr  text-info">Price: @ViewBag.Price.ToString("c")</div>
+                  
+                </div>
+
+            </div>
+            <div class="col-4 mt-2">
+               
+                <vc:toppings/>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

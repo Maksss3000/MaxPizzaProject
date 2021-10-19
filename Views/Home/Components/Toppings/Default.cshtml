@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Category>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="intr  text-info" scope="col">Categories</th>
+                <th class="intr  text-info" scope="col">Topping Price</th>
+                <th class="intr text-info" scope="col">Pizza Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Category c in Model)
+            {
+               
+                <tr>
+                    <th class="intr  text-info" scope="row">
+                        <a asp-action="SpecificPizza"
+                           asp-route-toppCatId="@c.Id"
+                           asp-route-sizeId="@ViewBag.SizeId"
+                           class=" btn intr @(c.Id==ViewBag.CatId ?"btn-primary":"btn-outline-secondary")">
+                            @c.Name
+                        </a>
+                    </th>
+                    
+                    <th class="intr text-info">
+                        @ViewBag.ToppingPrices[c.Id].ToString("c")
+                    </th>
+
+                    <th class="intr text-info">@ViewBag.Size?.TheSize</th>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+
+    @if (ViewBag.Toppings != null)
+    {
+        <div>
+            <ul>
+                @foreach (Topping t in ViewBag.Toppings)
+                {
+
+                    <li class=" intr text-success">
+                        @t.Name
+               
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+      

@@ -7,12 +7,14 @@ namespace MaxPizzaProject.Models
 {
     public class Size
     {
+        
         public long Id { get; set; }
+
+        public string TheSize { get; set; }
 
         public IEnumerable<Category> Categories { get; set; }
 
-        //Many to many with Price?
-        public IEnumerable<Price> Prices { get; set; }
+        public List<CategorySize> CategoriesSizes { get; set; } = new List<CategorySize>();
 
     }
 }

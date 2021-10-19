@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Pizza>
+
+    <section class="pizza">
+        <div class="container">
+            <div class="box">
+               
+
+                    @foreach (Pizza p in Model)
+                    {
+
+
+                        <div class="img_rad">
+
+                            <div class="intro">@p.Name</div>
+                            <div>
+
+                                <a asp-route-id="@p.Id" asp-action="SpecificPizza">
+                                    <img class="img_pizza"
+                                         src="/@p.ImagePath"
+                                         alt="pizza" />
+                                </a>
+                                <p class="img_descr">@p.Description</p>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div>Pizza Category : @p.Category.Name</div>
+                        <div>
+                            Pizza Sizes:
+                            @foreach (var size in p.Category.Sizes)
+                            {
+                                <div>Size:@size.TheSize</div>
+
+                                <div>
+                                    Price:
+                                    @size.CategoriesSizes.Where(s => s.CategoryId == p.CategoryId).Where(s => s.SizeId == size.Id).Select(s => s.Price).First();
+                                    @* @size.CategoriesSizes.Where(s=>s.Size.TheSize==size.TheSize).Select(s=>s.Price).First()*@
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    
+                </div>
+        </div>
+    </section>

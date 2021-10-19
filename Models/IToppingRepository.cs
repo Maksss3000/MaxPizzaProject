@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MaxPizzaProject.Models
+{
+    public interface IToppingRepository
+    {
+        IEnumerable<Topping> Toppings { get; }
+
+        public IEnumerable<long> GetToppingCategoriesIds();
+
+        public Dictionary<long, decimal> GetToppingPrice (IEnumerable<long> ids, long sizeId);
+
+        public IEnumerable<Category> GetToppCategories();
+
+        public IEnumerable<Topping> GetToppingsByCategory(long catId);
+    }
+}
