@@ -24,30 +24,15 @@ namespace MaxPizzaProject.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.Main = "Main";
             return View();
         }
 
-        public IActionResult SpecificPizza(long id,long toppCatId,long sizeId=1)
+        public IActionResult SpecificPizza(long pizzaId)
         {
-            //Вынести все в отдельный класс с полями?
-            ViewBag.SizeId = sizeId;
-            ViewBag.CatId = toppCatId;
-            ViewBag.Size = sizeRepo.GetSize(sizeId);
-     
-            if (toppCatId != 0)
-            {
-                ViewBag.Toppings = toppingRepo.GetToppingsByCategory(toppCatId);
-            }
 
-            Pizza p = pizzaRepo.GetPizzaById(id);
-         
-            if (p != null)
-            {
-                ViewBag.Price = pizzaRepo.GetPizzaPrice(sizeId, p.CategoryId);
-                return View(p);
-            }
-
-            return RedirectToAction("Index");
+            return View(pizzaId);
+           
         }
         public IActionResult AllPizzas()
         {   
