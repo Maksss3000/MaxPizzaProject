@@ -21,11 +21,14 @@
         <div class="col">
             <div class="p-3 text-center text-info">
                 <h4 class="text-center text-warning">Choose Pizza Size</h4>
+
                 @foreach (Size s in SelectedPizza.Category.Sizes)
                 {
-                    <button type="button" class="btn btn-success mt-3"
+                 
+                    <button type="button" class=" btn btn-@GetClass(s.TheSize) mt-3 "
                             @onclick="@(()=>ChangePizzaSize(s.Id,SelectedPizza.CategoryId,s.TheSize))">
                         @s.TheSize
+
                     </button>
                 }
                 @if (PizzaPrice != 0)
@@ -73,7 +76,7 @@
                     {
                         <tr>
                             <th class="text-info" scope="row">
-                                <button class="btn-sm btn-success" @onclick="@(e=>SeeToppings(e,c.Id))">
+                                <button type="button" class="btn-sm btn-@GetToppClass(c.Name)" @onclick="@(e=>SeeToppings(e,c.Id,c.Name))">
                                     @c.Name
                                 </button>
                             </th>
@@ -97,35 +100,9 @@
             </table>
         </div>
 
-
-
-
     </div>
 
 
    
 
-            @*
-
-
-                <div class="p-3 intr text-info">
-                    Choose Size:
-                    @foreach (Size s in SelectedPizza.Category.Sizes)
-                    {
-                        <button class="btn btn-primary"
-                                @onclick="@(()=>ChangePizzaSize(s.Id,SelectedPizza.CategoryId,s.TheSize))">
-                           @s.TheSize
-                        </button>
-                    }
-                    @if (PizzaPrice != 0)
-                    {
-                        <div class="intr  text-info">
-                            Price: @PizzaPrice.ToString("c")
-                        </div>
-                    }
-
-                </div>
-            *@
-
-
-         
+        

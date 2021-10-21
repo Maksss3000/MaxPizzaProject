@@ -1,7 +1,5 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -23,12 +21,23 @@ namespace MaxPizzaProject.Blazor
 
         public string PizzaSize { get; set; }
 
+        public string SelectedToppingCategoryName { get; set; }
 
         public void ChangePizzaSize(long sizeId, long categoryId, string pizzaSize)
         {
             PizzaPrice = PizzaContext.GetPizzaPrice(sizeId, categoryId);
             PizzaSize = pizzaSize;
             PizzaSizeId = sizeId;
+        }
+
+        public string GetClass(string size)
+        {
+            return PizzaSize == size ? "success" : "outline-dark";
+        }
+
+        public string GetToppClass(string topCat)
+        {
+            return SelectedToppingCategoryName == topCat ? "success" : "outline-dark";
         }
 
         [Parameter]
@@ -43,14 +52,17 @@ namespace MaxPizzaProject.Blazor
 
         IEnumerable<Topping> ToppingsOfSpecCategory { get; set; }
 
-        public IEnumerable<Topping> SeeToppings(MouseEventArgs e, long catId)
+        public IEnumerable<Topping> SeeToppings(MouseEventArgs e, long catId,string topCatName)
         {
+            SelectedToppingCategoryName = topCatName;
             ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(catId);
+
             return ToppingsOfSpecCategory;
         }
 
         public decimal ToppingPrice(long toppCatId, long sizeId)
         {
+           
             ToppPrice = ToppContext.GetToppPrice(toppCatId, sizeId);
             return ToppPrice;
         }
