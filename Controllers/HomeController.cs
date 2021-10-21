@@ -10,17 +10,16 @@ namespace MaxPizzaProject.Controllers
 {
     public class HomeController : Controller
     {
-        private IToppingRepository toppingRepo;
+       // private IToppingRepository toppingRepo;
         private IPizzaRepository pizzaRepo;
-        private ISizeRepository sizeRepo;
-        public HomeController(IToppingRepository topRep,
-                              IPizzaRepository pizzaRep,
-                              ISizeRepository sizeRep)
+        //private ISizeRepository sizeRepo;
+        public HomeController(IPizzaRepository pizzaRep)
+                              
+                             
         {
-          
-            toppingRepo = topRep;
+         
             pizzaRepo = pizzaRep;
-            sizeRepo = sizeRep;
+           
         }
         public IActionResult Index()
         {

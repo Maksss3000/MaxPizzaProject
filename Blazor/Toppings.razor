@@ -1,12 +1,12 @@
 ﻿
-<div class="container-fluid  bg-primary min-vh-100">
+
     <h2 class="text-center text-danger bg-warning p-3">@SelectedPizza.Name</h2>
     <div class="row p-5">
         <div class="col">
             <div>
                 <div>
 
-                    <img class="rounded-circle"
+                    <img class="rounded"
                          src="/@SelectedPizza.ImagePath"
                          alt="pizza" />
                 </div>
@@ -65,7 +65,7 @@
                     <tr>
                         <th class="text-warning" scope="col">Topping Category</th>
                         <th class="text-dark" scope="col">Prices</th>
-                        <th class="text-info" scope="col">Pizza Size</th>
+                        <th class="text-warning" scope="col">Pizza Size</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,7 @@
                     {
                         <tr>
                             <th class="text-info" scope="row">
-                                <button class="btn-sm btn-info" @onclick="@(e=>SeeToppings(e,c.Id))">
+                                <button class="btn-sm btn-success" @onclick="@(e=>SeeToppings(e,c.Id))">
                                     @c.Name
                                 </button>
                             </th>
@@ -102,7 +102,7 @@
 
 
     </div>
-</div>
+
 
    
 
@@ -129,51 +129,4 @@
             *@
 
 
-            @code{
-
-
-                [Inject]
-                public IToppingRepository ToppContext { get; set; }
-
-                [Inject]
-                public IPizzaRepository PizzaContext { get; set; }
-
-                public decimal PizzaPrice { get; set; }
-
-                public long PizzaSizeId { get; set; }
-
-                public string PizzaSize { get; set; }
-
-
-                public void ChangePizzaSize(long sizeId, long categoryId, string pizzaSize)
-                {
-                    PizzaPrice = PizzaContext.GetPizzaPrice(sizeId, categoryId);
-                    PizzaSize = pizzaSize;
-                    PizzaSizeId = sizeId;
-                }
-
-                [Parameter]
-                public long PizzaId { get; set; }
-
-                public Pizza SelectedPizza => PizzaContext.GetPizzaById(PizzaId);
-
-                public decimal ToppPrice { get; set; } = 0;
-
-                public IEnumerable<Category> ToppCategories => ToppContext.GetToppCategories();
-
-
-                IEnumerable<Topping> ToppingsOfSpecCategory { get; set; }
-
-                public IEnumerable<Topping> SeeToppings(MouseEventArgs e, long catId)
-                {
-                    ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(catId);
-                    return ToppingsOfSpecCategory;
-                }
-
-                public decimal ToppingPrice(long toppCatId, long sizeId)
-                {
-                    ToppPrice = ToppContext.GetToppPrice(toppCatId, sizeId);
-                    return ToppPrice;
-                }
-
-            }
+         
