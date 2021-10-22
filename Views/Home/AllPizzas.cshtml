@@ -1,49 +1,32 @@
 ﻿@model IEnumerable<Pizza>
 
-    <section class="pizza">
-        <div class="container">
-            <div class="box">
-               
-
-                    @foreach (Pizza p in Model)
-                    {
-
-
-                        <div class="img_rad">
-
-                            <div class="intro">@p.Name</div>
-                            <div>
-
-                                <a asp-route-pizzaId="@p.Id" asp-action="SpecificPizza">
-                                    <img class="img_pizza"
-                                         src="/@p.ImagePath"
-                                         alt="pizza" />
-                                </a>
-                                <p class="img_descr">@p.Description</p>
-
-                            </div>
-                        </div>
-
-
-
-
-                        <div>Pizza Category : @p.Category.Name</div>
-                        <div>
-                            Pizza Sizes:
-                            @foreach (var size in p.Category.Sizes)
-                            {
-                                <div>Size:@size.TheSize</div>
-
-                                <div>
-                                    Price:
-                                    @size.CategoriesSizes.Where(s => s.CategoryId == p.CategoryId).Where(s => s.SizeId == size.Id).Select(s => s.Price).First();
-                                    @* @size.CategoriesSizes.Where(s=>s.Size.TheSize==size.TheSize).Select(s=>s.Price).First()*@
-                                </div>
-                            }
-
-                        </div>
-                    }
-                    
-                </div>
+<div class="container-fluid  bg-secondary min-vh-100">
+    <div class="row">
+        <div class="col-3">
+            <vc:pizza-categories />
         </div>
-    </section>
+        <div class="col-8 d-flex flex-row justify-content-lg-between flex-wrap ">
+
+            @foreach (Pizza p in Model)
+            {
+                <div class="mt-4 d-flex flex-column  align-items-center">
+                    <div class="text-black mb-2">
+                        <h4> @p.Name</h4>
+                    </div>
+                    <a asp-route-pizzaId="@p.Id" asp-action="SpecificPizza">
+                        <img class="rounded"
+                             src="/@p.ImagePath"
+                             alt="pizza" />
+                    </a>
+
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+
+
+
+</div>

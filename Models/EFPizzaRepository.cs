@@ -17,10 +17,21 @@ namespace MaxPizzaProject.Models
         public IEnumerable<Pizza> Pizzas => context.Pizzas.Include(c => c.Category).
                 ThenInclude(s => s.CategoriesSizes).ThenInclude(s => s.Size);
 
+        public IEnumerable<Category> GetAllPizzasCategories()
+        {
+            return context.Categories.Where(c => c.Type == "Pizza");
+        }
+
         public Pizza GetPizzaById(long id)
         {
           return  context.Pizzas.Include(c => c.Category).
                 ThenInclude(s => s.CategoriesSizes).ThenInclude(s => s.Size).FirstOrDefault(p => p.Id == id);
+        }
+
+        public IEnumerable<Pizza> GetPizzasByCategoryId (long catId)
+        {
+            return context.Pizzas.Include(c => c.Category).
+                ThenInclude(s => s.CategoriesSizes).ThenInclude(s => s.Size).Where(c=>c.Category.Id==catId);
         }
 
         public decimal GetPizzaPrice(long sizeId,long categoryId)
@@ -32,5 +43,7 @@ namespace MaxPizzaProject.Models
               //      Where(s => s.SizeId == sizeId).
                 //    Where(c => c.CategoryId == p.CategoryId).Select(p => p.Price).FirstOrDefault();
         }
+
+      
     }
 }

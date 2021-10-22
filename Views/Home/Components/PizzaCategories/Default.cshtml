@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Category>
+
+    <h3 class="pt-4 text-warning">Pizza Categories</h3>
+    <div class="pt-4">
+        <div>
+            <a  class="btn btn-block btn-@(ViewBag.SelectedCatId==0 ? "primary": "outline-dark")" asp-route-pizzaCatId="0" asp-action="AllPizzas">
+                All Pizzas
+            </a>
+        </div>
+        @foreach (Category c in Model)
+        {
+
+            <div class="mt-2">
+                <a class="btn btn-block btn-@(ViewBag.SelectedCatId==c.Id ? "primary": "outline-dark")" asp-route-pizzaCatId="@c.Id" asp-action="AllPizzas">@c.Name</a>
+            </div>
+
+        }
+    </div>

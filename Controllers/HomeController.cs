@@ -33,9 +33,20 @@ namespace MaxPizzaProject.Controllers
             return View(pizzaId);
            
         }
-        public IActionResult AllPizzas()
-        {   
-            return View(pizzaRepo.Pizzas);
+        public IActionResult AllPizzas(long pizzaCatId)
+        {
+            ViewBag.SelectedCatId = pizzaCatId;
+
+            if (pizzaCatId == 0)
+            {
+                return View(pizzaRepo.Pizzas);
+            }
+           
+            return View(pizzaRepo.GetPizzasByCategoryId(pizzaCatId));
+            // return (pizzaRepo.GetPizzaById(pizzaCatId));
         }
+
+        
+
     }
 }
