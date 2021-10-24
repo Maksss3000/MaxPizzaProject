@@ -11,7 +11,8 @@
         {
 
             <div class="mt-2">
-                <a class="btn btn-block btn-@(ViewBag.SelectedCatId==c.Id ? "primary": "outline-dark")" asp-route-pizzaCatId="@c.Id" asp-action="AllPizzas">@c.Name</a>
+                <a class="btn btn-block btn-@(ViewBag.SelectedCatId==c.Id ? "primary": "outline-dark")" 
+                   asp-route-pizzaCatId="@c.Id" asp-action="AllPizzas">@c.Name</a>
             </div>
 
         }

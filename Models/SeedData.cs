@@ -25,12 +25,19 @@ namespace MaxPizzaProject.Models
                 {
                     TheSize = "Small",
                 };
+
+                Size medium = new Size
+                {
+                    TheSize = "Medium"
+                };
                 
                 Size large = new Size
                 {
                     TheSize = "Large",
                  
                 };
+
+                
                 /*
 
 
@@ -111,6 +118,17 @@ namespace MaxPizzaProject.Models
                     //Prices=new List<Price> { p1,p2}
                 };
 
+                Category fish = new Category
+                {
+
+                    // Sizes = new List<Size> { small, large },
+                    Description = "Pizza with Fresh Fish",
+                    Name = "Fish",
+                    Type = "Pizza"
+                    //CategoriesSizes=new List<CategorySize> { catSizeS2,catSizeL1}
+                    //Prices=new List<Price> { p1,p2}
+                };
+
                 Category meatTopping = new Category
                 {
                     Description = "Meat Topping",
@@ -150,7 +168,7 @@ namespace MaxPizzaProject.Models
                 };
 
                 
-                context.Categories.AddRange(classic, mix, hotty, cheeseTopping, meatTopping);
+                context.Categories.AddRange(classic, mix, hotty, cheeseTopping, meatTopping,fish);
                 context.Toppings.AddRange(peperony, parmezan,bakar);
                 
 
@@ -181,8 +199,28 @@ namespace MaxPizzaProject.Models
                         Price=100
                     }
                 };
+
+
+                CategorySize[] sizesForFish = new CategorySize[]
+               {
+                    new CategorySize
+                    {
+                        Size=small,
+                        Price=75
+                    },
+                    new CategorySize
+                    {
+                        Size=large,
+                        Price=85
+                    },
+                    
+               };
+
+
+
                 //classic.CategoriesSizes.Add(catSizeS1);
                 //mix.CategoriesSizes.Add(catSizeS1);
+                fish.CategoriesSizes.AddRange(sizesForFish);
                 classic.CategoriesSizes.Add(catSizeS1);
                 classic.CategoriesSizes.Add(new CategorySize { Size =large , Price = 55m });
                 mix.CategoriesSizes.Add(new CategorySize { Size = small,  Price = 25m });
@@ -191,6 +229,7 @@ namespace MaxPizzaProject.Models
 
                 cheeseTopping.CategoriesSizes.Add(new CategorySize { Size = small, Price = 5 });
                 cheeseTopping.CategoriesSizes.Add(new CategorySize { Size = large, Price = 10 });
+                //cheeseTopping.CategoriesSizes.Add(new CategorySize { Size = medium, Price = 7 });
 
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = small, Price = 6 });
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = large, Price = 10 });
@@ -236,7 +275,16 @@ namespace MaxPizzaProject.Models
                     InStock=true,
                     Description="Very Spicy Pizza , with Roasted Red Peppers."
 
-                }
+                },
+                 new Pizza
+                 {
+                     Name = "TunaFresh",
+                     ImagePath = "img/Pizzas/fish.jpg",
+                     Category = fish,
+                     InStock = true,
+                     Description = "Pizza with fresh Tuna."
+
+                 }
                 );
 
                 context.SaveChanges();
