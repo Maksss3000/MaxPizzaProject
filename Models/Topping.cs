@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace MaxPizzaProject.Models
 {
-    public class Topping
+    public class Topping : Product
     {
+        
+        /*
         public long Id { get; set; }
 
         public string Name { get; set; }
@@ -18,6 +20,6 @@ namespace MaxPizzaProject.Models
         public Category Category { get; set; }
 
         public long CategoryId { get; set; }
-
+        */
     }
 }

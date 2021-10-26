@@ -1,20 +1,41 @@
 ﻿
+
+<input name="prodId" value="@SelectedPizza.Id" type="hidden" />
+<input name="productName" value="@SelectedPizza.Name" type="hidden" />
+<input name="totalPrice" value="@TotalPrice" type="hidden" />
+<input name="size" value="@PizzaSize" type="hidden" />
+
+@if (allAddedToppings.Count() == 0)
+{
+    <input name="topp" value="@allAddedToppings" type="hidden" />
+}
+else
+{
+    @foreach (KeyValuePair<string, int> kvp in allAddedToppings)
+    {
+        <input name="topp[@kvp.Key]" value="@kvp.Value" type="hidden" />
+    }
+
+}
+
+
+
 <h2 class="text-center text-danger bg-warning p-3">@SelectedPizza.Name</h2>
 <div class="row p-5 ">
     <div class="col">
         <div class=" d-flex flex-column  align-items-center">
             <div>
-                
-        <img class="rounded"
-             src="/@SelectedPizza.ImagePath"
-             alt="pizza" />
-                
+
+                <img class="rounded img-thumbnail"
+                     src="/@SelectedPizza.ImagePath"
+                     alt="pizza" />
+
             </div>
             <h5 class="mt-3 text-warning">
                 @SelectedPizza.Description
             </h5>
         </div>
-       
+
     </div>
 
 
@@ -36,8 +57,41 @@
             @if (PizzaPrice != 0)
             {
                 <div class="mt-2 text-center text-info">
+
                     <div class="text-dark">
                         <h4 class="text-warning"><span class="text-dark">Price:</span> @PizzaPrice.ToString("c")</h4>
+                    </div>
+
+                    <div class="text-dark">
+                        <h4 class="text-warning"><span class="text-dark">Total Price:</span> @TotalPrice.ToString("c")</h4>
+                    </div>
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-warning" scope="col">Toppings</th>
+                                    <th class="text-dark" scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (KeyValuePair<string, int> kvp in allAddedToppings)
+                                {
+
+                                    <tr>
+                                        <th class="text-dark" scope="row">
+                                            @kvp.Key
+                                        </th>
+
+                                        <th class="text-dark">
+                                            X @kvp.Value
+                  
+                                        </th>
+
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             }
@@ -50,15 +104,26 @@
         {
             <div>
                 <h3 class="text-dark">Toppings</h3>
-                <ul class="list-group mt-3">
+                <div class="list-group mt-3">
                     @foreach (Topping t in ToppingsOfSpecCategory)
                     {
 
-                        <li class="list-group-item list-group-item-primary">
+                        <div class="list-group-item list-group-item-primary">
                             @t.Name
-                        </li>
+                            <button type="button"
+                                    class="btn-sm text-dark bg-warning "
+                                    @onclick="@(()=>AddTopping(t.Name))">
+                                Add
+                            </button>
+                            <button type="button"
+                                    class="btn-sm text-danger bg-warning "
+                                    @onclick="@(()=>RemoveTopping(t.Name))">
+                                Remove
+                            </button>
+                        </div>
+
                     }
-                </ul>
+                </div>
             </div>
         }
     </div>
@@ -100,13 +165,13 @@
                 }
             </tbody>
         </table>
+        <div class="p-3">
+            <button type="submit" class="btn btn-success">Add to Cart</button>
+        </div>
     </div>
 
 </div>
 
-<div class="row justify-content-end">
-    <div class="col-2">
-        <button type="button" class="btn btn-success">Add to Cart</button>
-    </div>
-</div>
+
+
 

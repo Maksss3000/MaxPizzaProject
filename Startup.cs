@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,19 @@ namespace MaxPizzaProject
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+
+            //Adding services for Sessions.
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            //When we using class Cart ,the programm will
+            //create SessionCart.GetCart(IserviceProvider sp)
+            //It returns SessionCart cart = session?.GetJson<SessionCart>("Cart") ??
+            //new SessionCart()
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
             services.AddServerSideBlazor();
 
             //Adding Connection to My Database.(MaxPizzaStore db).
@@ -62,6 +76,8 @@ namespace MaxPizzaProject
             app.UseWebOptimizer();
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 

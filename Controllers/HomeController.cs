@@ -10,16 +10,17 @@ namespace MaxPizzaProject.Controllers
 {
     public class HomeController : Controller
     {
-       // private IToppingRepository toppingRepo;
+        private PizzeriaDbContext context;
         private IPizzaRepository pizzaRepo;
-        //private ISizeRepository sizeRepo;
-        public HomeController(IPizzaRepository pizzaRep)
+        
+        public Cart Cart { get; set; }
+        public HomeController(IPizzaRepository pizzaRep, PizzeriaDbContext ctx,Cart cartService)
                               
-                             
         {
-         
             pizzaRepo = pizzaRep;
-           
+            context = ctx;
+
+            Cart = cartService;
         }
         public IActionResult Index()
         {
@@ -29,9 +30,7 @@ namespace MaxPizzaProject.Controllers
 
         public IActionResult SpecificPizza(long pizzaId)
         {
-
-            return View(pizzaId);
-           
+            return View(pizzaId);  
         }
         public IActionResult AllPizzas(long pizzaCatId)
         {
@@ -43,10 +42,27 @@ namespace MaxPizzaProject.Controllers
             }
            
             return View(pizzaRepo.GetPizzasByCategoryId(pizzaCatId));
-            // return (pizzaRepo.GetPizzaById(pizzaCatId));
+           
         }
 
-        
+        public IActionResult SeeCart()
+        {
+            return View("Cart",Cart);
+        }
+
+        [HttpPost]
+        public IActionResult AddToCart(OrderInformation order)
+        {
+            Cart.AddItem(order);
+            return View("Cart", Cart);          
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromCart(Guid orderId)
+        {
+            Cart.RemoveLine(orderId);
+            return View(nameof(Cart), Cart);
+        }
 
     }
 }
