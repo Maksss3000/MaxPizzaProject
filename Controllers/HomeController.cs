@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace MaxPizzaProject.Controllers
 {
@@ -20,6 +17,7 @@ namespace MaxPizzaProject.Controllers
             pizzaRepo = pizzaRep;
             context = ctx;
 
+            //Dependency Injection.
             Cart = cartService;
         }
         public IActionResult Index()
@@ -54,14 +52,14 @@ namespace MaxPizzaProject.Controllers
         public IActionResult AddToCart(OrderInformation order)
         {
             Cart.AddItem(order);
-            return View("Cart", Cart);          
+            return RedirectToAction(nameof(SeeCart));    
         }
 
         [HttpPost]
         public IActionResult RemoveFromCart(Guid orderId)
         {
             Cart.RemoveLine(orderId);
-            return View(nameof(Cart), Cart);
+            return RedirectToAction(nameof(SeeCart));
         }
 
     }

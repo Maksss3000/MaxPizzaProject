@@ -6,51 +6,53 @@
 <h2 class="text-center text-warning mt-2">Your Cart</h2>
 
 <div class=" bg-white mt-4">
-<table class=" pt-3  table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Toppings</th>
-            <th>Size</th>
-            <th class="text-right">Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var line in Model.Orders)
-        {
+    <table class=" pt-3  table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Toppings</th>
+                <th>Size</th>
+                <th class="text-right">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Orders)
+            {
 
-        <tr>
-            <td class="text-center">@line.ProductName</td>
-            <td class="text-center">
-                @foreach (KeyValuePair<string, string> kvp in line.Topp)
-                {
-                <p>@kvp.Key X @kvp.Value</p>
-                }
+                <tr>
+                    <td class="text-center">@line.ProductName</td>
+                    <td class="text-center">
+                        @foreach (KeyValuePair<string, string> kvp in line.Topp)
+                        {
+                            <p>@kvp.Key X @kvp.Value</p>
+                        }
+                    </td>
+                    <td class="text-left">@line.Size</td>
+                    <td class="text-right">@line.TotalPrice.ToString("c")</td>
+                    @{ totalPrice += line.TotalPrice;}
+                    <td class="text-center">
+                        <!-- asp-page-handler="Remove" is like redirection to method OnRemovePost!-->
+                        <form asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="orderId" value="@line.OrderId" />
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-center ">
+                    <h5>Total Price:  @totalPrice.ToString("c")</h5>
                 </td>
-            <td class="text-left">@line.Size</td>
-            <td class="text-right">@line.TotalPrice.ToString("c")</td>
-            @{ totalPrice += line.TotalPrice;}
-            <td class="text-center">
-                <!-- asp-page-handler="Remove" is like redirection to method OnRemovePost!-->
-                <form asp-action="RemoveFromCart" method="post">
-                    <input type="hidden" name="orderId" value="@line.OrderId" />
-                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
-                </form>
-            </td>
-        </tr>
-        }
-    </tbody>
-    
-    <tfoot>
-        <tr>
-            <td colspan="3"  class="text-center ">
-            <h5>Total Price:  @totalPrice.ToString("c")</h5>
-            </td>
-        </tr>
-    </tfoot>
-         
-</table>
+            </tr>
+        </tfoot>
+
+    </table>
 
 </div>
 
-                    
+<div class="text-center">
+    <a class="btn btn-primary" asp-action="AllPizzas">Continue Shopping</a>
+</div>        

@@ -86,6 +86,17 @@ namespace MaxPizzaProject
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("specificPizza", "Pizza/{pizzaId:long}",
+                   new { Controller = "Home", action = "SpecificPizza" });
+
+                endpoints.MapControllerRoute("category", "Category/{pizzaCatId}",
+                   new { Controller = "Home", action = "AllPizzas" , pizzaCatId = 0 });
+
+                endpoints.MapControllerRoute("cart", "Cart/",
+                  new { Controller = "Home", action = "SeeCart" });
+
+               
+
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapBlazorHub();
             });
