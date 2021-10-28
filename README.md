@@ -31,7 +31,7 @@ ___
 ### User can choose pizza size , different toppings and add product to cart.
 ![SpicificPizza](ReadMe/img/Order.jpg "SpecificPizza")
 ### User Cart
-![Cart](Readme/img/Cart.jpg "Cart")
+![Cart](ReadMe/img/Cart.jpg "Cart")
 
 
 
