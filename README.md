@@ -26,10 +26,10 @@ ___
 
 ### User can choose pizza by Category.
 ***Category Mix***
-![Category](./img/Mix.jpg "Category")
+![Category](ReadMe/img/Mix.jpg "Category")
   
 ### User can choose pizza size , different toppings and add product to cart.
-![SpicificPizza](img/Order.jpg "SpecificPizza")
+![SpicificPizza](ReadMe/img/Order.jpg "SpecificPizza")
 ### User Cart
 ![Cart](img/Cart.jpg "Cart")
 
