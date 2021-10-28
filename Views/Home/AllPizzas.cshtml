@@ -9,17 +9,21 @@
 
             @foreach (Pizza p in Model)
             {
-                <div class="mt-4 d-flex flex-column  align-items-center">
-                    <div class="text-black mb-2">
-                        <h4> @p.Name</h4>
-                    </div>
+
+            <div class="mt-4 align-items-center">
+                <div class="text-black mb-2">
+                    <h4> @p.Name</h4>
+                </div>
+
+                <div>
                     <a asp-route-pizzaId="@p.Id" asp-action="SpecificPizza">
-                        <img class="rounded img-thumbnail"
+                        <img style=" width: 250px; height: 250px; object-fit: cover;" class="rounded img-thumbnail "
                              src="/@p.ImagePath"
                              alt="pizza" />
                     </a>
-
                 </div>
+              
+            </div>
             }
 
         </div>

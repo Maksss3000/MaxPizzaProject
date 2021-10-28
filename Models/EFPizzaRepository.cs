@@ -17,6 +17,11 @@ namespace MaxPizzaProject.Models
         public IEnumerable<Pizza> Pizzas => context.Pizzas.Include(c => c.Category).
                 ThenInclude(s => s.CategoriesSizes).ThenInclude(s => s.Size);
 
+        public IEnumerable<Pizza> GetPizzasByCategoryName(string catName)
+        {
+            return context.Pizzas.Include(c => c.Category).
+               ThenInclude(s => s.CategoriesSizes).ThenInclude(s => s.Size).Where(c => c.Category.Name == catName);
+        }
         public IEnumerable<Category> GetAllPizzasCategories()
         {
             return context.Categories.Where(c => c.Type == "Pizza");

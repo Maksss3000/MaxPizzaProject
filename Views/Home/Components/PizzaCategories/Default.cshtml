@@ -3,7 +3,7 @@
     <h3 class="pt-4 text-warning">Pizza Categories</h3>
     <div class="pt-4">
         <div>
-            <a  class="btn btn-block btn-@(ViewBag.SelectedCatId==0 ? "primary": "outline-dark")" asp-route-pizzaCatId="" asp-action="AllPizzas">
+            <a  class="btn btn-block btn-@(ViewBag.SelectedCatName=="" ? "primary": "outline-dark")" asp-route-pizzaCatName="" asp-action="AllPizzas">
                 All Pizzas
             </a>
         </div>
@@ -11,8 +11,8 @@
         {
 
             <div class="mt-2">
-                <a class="btn btn-block btn-@(ViewBag.SelectedCatId==c.Id ? "primary": "outline-dark")" 
-                   asp-route-pizzaCatId="@c.Id" asp-action="AllPizzas">@c.Name</a>
+                <a class="btn btn-block btn-@(ViewBag.SelectedCatName==c.Name ? "primary": "outline-dark")" 
+                   asp-route-pizzaCatName="@c.Name" asp-action="AllPizzas">@c.Name</a>
             </div>
 
         }

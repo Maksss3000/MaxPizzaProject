@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -89,8 +85,8 @@ namespace MaxPizzaProject
                 endpoints.MapControllerRoute("specificPizza", "Pizza/{pizzaId:long}",
                    new { Controller = "Home", action = "SpecificPizza" });
 
-                endpoints.MapControllerRoute("category", "Category/{pizzaCatId}",
-                   new { Controller = "Home", action = "AllPizzas" , pizzaCatId = 0 });
+                endpoints.MapControllerRoute("category", "Category/{pizzaCatName}",
+                   new { Controller = "Home", action = "AllPizzas" });
 
                 endpoints.MapControllerRoute("cart", "Cart/",
                   new { Controller = "Home", action = "SeeCart" });
@@ -99,6 +95,8 @@ namespace MaxPizzaProject
 
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapBlazorHub();
+
+                endpoints.MapFallbackToController("AllPizzas", "Home");
             });
 
             SeedData.Seed(ctx);

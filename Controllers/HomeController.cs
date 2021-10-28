@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,18 +30,23 @@ namespace MaxPizzaProject.Controllers
 
         public IActionResult SpecificPizza(long pizzaId)
         {
+            if (pizzaRepo.GetPizzaById(pizzaId) == null)
+            {
+                return RedirectToAction(nameof(AllPizzas));
+            }
+
             return View(pizzaId);  
         }
-        public IActionResult AllPizzas(long pizzaCatId)
+        public IActionResult AllPizzas(string pizzaCatName)
         {
-            ViewBag.SelectedCatId = pizzaCatId;
-
-            if (pizzaCatId == 0)
+            ViewBag.SelectedCatName = pizzaCatName;
+            if (pizzaRepo.GetPizzasByCategoryName(pizzaCatName).Any()!=true)
             {
+                ViewBag.SelectedCatName = "";
                 return View(pizzaRepo.Pizzas);
             }
            
-            return View(pizzaRepo.GetPizzasByCategoryId(pizzaCatId));
+            return View(pizzaRepo.GetPizzasByCategoryName(pizzaCatName));
            
         }
 

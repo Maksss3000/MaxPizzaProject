@@ -284,7 +284,15 @@ namespace MaxPizzaProject.Models
                      InStock = true,
                      Description = "Pizza with fresh Tuna."
 
-                 }
+                 },
+                  new Pizza
+                  {
+                      Name = "MaxOlives",
+                      ImagePath = "img/Pizzas/maxolives.jpg",
+                      Category = mix,
+                      InStock = true,
+                      Description = "Pizza with our special Cream fresh , olives and tomatoes ."
+                  }
                 );
 
                 context.SaveChanges();

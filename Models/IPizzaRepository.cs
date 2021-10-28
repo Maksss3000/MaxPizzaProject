@@ -10,6 +10,7 @@ namespace MaxPizzaProject.Models
         public IEnumerable<Pizza> Pizzas { get; }
         public Pizza GetPizzaById(long id);
 
+        public IEnumerable<Pizza> GetPizzasByCategoryName(string catName);
         public IEnumerable<Pizza> GetPizzasByCategoryId(long id);
         public decimal GetPizzaPrice(long sizeId, long categoryId);
 
