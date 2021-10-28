@@ -22,7 +22,7 @@ ___
 ##  Main Page.
 ___
 ***Main page***
-![Main](./img/Main.jpg "Main")
+![Main](ReadMe/img/Main.jpg "Main")
 
 ### User can choose pizza by Category.
 ***Category Mix***
