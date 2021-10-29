@@ -10,7 +10,7 @@ namespace MaxPizzaProject.Blazor
     public partial class Toppings
     {
       
-        protected override void  OnInitialized()
+        protected override void OnInitialized()
         {
             
             //Initialization of Size that selected.
@@ -99,7 +99,8 @@ namespace MaxPizzaProject.Blazor
             if (allAddedToppings.ContainsKey(toppName))
             {
                 int quantity = allAddedToppings[toppName];
-                decimal toppPrice = ToppingPrice(SelectedCatId, PizzaSizeId) * quantity;
+                long catId = ToppContext.GetCategoryIdByToppingName(toppName);
+                decimal toppPrice = ToppingPrice(catId, PizzaSizeId) * quantity;
                 TotalPrice -= toppPrice;
 
                 allAddedToppings.Remove(toppName);

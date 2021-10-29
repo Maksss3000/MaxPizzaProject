@@ -83,7 +83,13 @@ else
                                             X @kvp.Value
 
                                         </th>
-
+                                        <th class="text-dark">
+                                            <button type="button"
+                                                    class="btn-sm text-danger bg-warning "
+                                                    @onclick="@(()=>RemoveTopping(kvp.Key))">
+                                                Remove
+                                            </button>
+                                        </th>
                                     </tr>
 
                                 }
@@ -106,17 +112,13 @@ else
                     {
 
                         <div class="list-group-item list-group-item-primary">
-                            @t.Name
+                    
                             <button type="button"
                                     class="btn-sm text-dark bg-warning "
                                     @onclick="@(()=>AddTopping(t.Name))">
-                                Add
+                                @t.Name
                             </button>
-                            <button type="button"
-                                    class="btn-sm text-danger bg-warning "
-                                    @onclick="@(()=>RemoveTopping(t.Name))">
-                                Remove
-                            </button>
+                            
                         </div>
 
                     }

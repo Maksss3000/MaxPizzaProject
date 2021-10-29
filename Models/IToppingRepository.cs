@@ -8,6 +8,7 @@ namespace MaxPizzaProject.Models
     public interface IToppingRepository
     {
         IEnumerable<Topping> Toppings { get; }
+        public long GetCategoryIdByToppingName(string toppName);
 
         public IEnumerable<long> GetToppingCategoriesIds();
 
