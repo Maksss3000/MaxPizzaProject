@@ -1,12 +1,11 @@
 ﻿@model long
-<form asp-action="AddToCart">
-    <div class="mt-2">
-        <component type="typeof(MaxPizzaProject.Blazor.Toppings)"
-                   param-pizzaid="Model" render-mode="Server" />
-       @* <div class="row justify-content-end">
-           
-        </div>
-        *@
-    </div>
+    <form asp-action="AddToCart">
+        <div class="mt-2">
+            <component type="typeof(MaxPizzaProject.Blazor.Toppings)"
+                       param-pizzaid="Model" render-mode="Server" />
+            @* <div class="row justify-content-end">
 
+                </div>
+            *@
+        </div>
     </form>

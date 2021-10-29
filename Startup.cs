@@ -53,6 +53,7 @@ namespace MaxPizzaProject
             services.AddWebOptimizer(pipeline =>
             {
                 pipeline.AddScssBundle("css/main.css", "sass/style.scss");
+                pipeline.AddScssBundle("css/pizzas.css", "sass/pizzas.scss");
                
 
             });

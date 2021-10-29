@@ -37,9 +37,6 @@ else
 
     </div>
 
-
-
-
     <div class="col">
         <div class="p-3 text-center text-info">
             <h4 class="text-center text-warning">Choose Pizza Size</h4>
@@ -47,6 +44,7 @@ else
             @foreach (Size s in SelectedPizza.Category.Sizes)
             {
 
+                 
                 <button type="button" class=" btn btn-@GetClass(s.TheSize) mt-3 "
                         @onclick="@(()=>ChangePizzaSize(s.Id,SelectedPizza.CategoryId,s.TheSize))">
                     @s.TheSize
@@ -83,7 +81,7 @@ else
 
                                         <th class="text-dark">
                                             X @kvp.Value
-                  
+
                                         </th>
 
                                     </tr>

@@ -58,8 +58,12 @@ namespace MaxPizzaProject.Controllers
         [HttpPost]
         public IActionResult AddToCart(OrderInformation order)
         {
-            Cart.AddItem(order);
-            return RedirectToAction(nameof(SeeCart));    
+          
+                Cart.AddItem(order);
+                return RedirectToAction(nameof(SeeCart)); 
+         
+            //Cart.AddItem(order);
+            //return RedirectToAction(nameof(SeeCart));    
         }
 
         [HttpPost]
