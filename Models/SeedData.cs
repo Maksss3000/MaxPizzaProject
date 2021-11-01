@@ -37,7 +37,16 @@ namespace MaxPizzaProject.Models
                  
                 };
 
-                
+                Size smallDrink = new Size
+                {
+                    TheSize = "0.5L"
+                };
+
+                Size largeDrink = new Size
+                {
+                    TheSize = "1.5L"
+                };
+
                 /*
 
 
@@ -71,7 +80,7 @@ namespace MaxPizzaProject.Models
 
                 */
 
-               // context.CategoriesSizes.AddRange(catSizeL1, catSizeL2, catSizeS1, catSizeS2);
+                // context.CategoriesSizes.AddRange(catSizeL1, catSizeL2, catSizeS1, catSizeS2);
                 //context.SaveChanges();
 
                 Category classic = new Category
@@ -87,6 +96,9 @@ namespace MaxPizzaProject.Models
                     
                     //Prices=new List<Price> { p1,p3}
                 };
+
+
+
 
                
 
@@ -144,6 +156,15 @@ namespace MaxPizzaProject.Models
                     
                 };
 
+                Category drink = new Category
+                {
+                  
+                    Name = "Drink",
+                    Type = "Drink"
+
+                };
+
+
                 Topping peperony = new Topping
                 {
                     InStock = true,
@@ -168,7 +189,9 @@ namespace MaxPizzaProject.Models
                 };
 
                 
-                context.Categories.AddRange(classic, mix, hotty, cheeseTopping, meatTopping,fish);
+
+                context.Categories.AddRange(classic, mix, hotty, 
+                                            cheeseTopping, meatTopping,fish,drink);
                 context.Toppings.AddRange(peperony, parmezan,bakar);
                 
 
@@ -217,9 +240,26 @@ namespace MaxPizzaProject.Models
                };
 
 
+                CategorySize[] sizesForDrink = new CategorySize[]
+               {
+                    new CategorySize
+                    {
+                        Size=smallDrink,
+                        Price=7.90M
+                    },
+                    new CategorySize
+                    {
+                        Size=largeDrink,
+                        Price=12.90M
+                    },
+
+               };
+
+
 
                 //classic.CategoriesSizes.Add(catSizeS1);
                 //mix.CategoriesSizes.Add(catSizeS1);
+                drink.CategoriesSizes.AddRange(sizesForDrink);
                 fish.CategoriesSizes.AddRange(sizesForFish);
                 classic.CategoriesSizes.Add(catSizeS1);
                 classic.CategoriesSizes.Add(new CategorySize { Size =large , Price = 55m });
@@ -233,11 +273,41 @@ namespace MaxPizzaProject.Models
 
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = small, Price = 6 });
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = large, Price = 10 });
-                
+
                 //classic.CategoriesSizes.Add(catSizeL1);
 
                 //mix.CategoriesSizes.Add(catSizeS1);
                 //mix.CategoriesSizes.Add(catSizeL2);
+
+                context.Drinks.AddRange(new Drink
+                {
+                    Name = "Coca-Cola",
+                    ImagePath = "img/Drinks/cola.jpg",
+                    Category = drink,
+                    InStock = true,
+
+                },
+               
+
+                new Drink
+                {
+                    Name = "Sprite",
+                    ImagePath = "img/Drinks/sprite.jpg",
+                    Category = drink,
+                    InStock = true,
+                },
+
+                new Drink
+                {
+                    Name = "Fanta",
+                    ImagePath = "img/Drinks/fanta.jpg",
+                    Category = drink,
+                    InStock = true,
+
+                } 
+               
+                ); 
+
 
                 context.Pizzas.AddRange(new Pizza
                 {
@@ -293,6 +363,7 @@ namespace MaxPizzaProject.Models
                       InStock = true,
                       Description = "Pizza with our special Cream fresh , olives and tomatoes ."
                   }
+
                 );
 
                 context.SaveChanges();

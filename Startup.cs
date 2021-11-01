@@ -45,7 +45,7 @@ namespace MaxPizzaProject
             services.AddScoped<IToppingRepository, EFToppingRepository>();
             services.AddScoped<IPizzaRepository, EFPizzaRepository>();
             services.AddScoped<ISizeRepository, EFSizeRepository>();
-
+            services.AddScoped<IDrinkRepository, EFDrinkRepository>();
             /*By WebOptimizer we can optimize our .css code.
             In link we will use main.css file , but in fact this file
             are  optimized style.scss file.

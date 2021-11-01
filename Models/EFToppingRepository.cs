@@ -32,9 +32,10 @@ namespace MaxPizzaProject.Models
             return context.Toppings.Where(t => t.CategoryId == catId);
         }
 
-        public long GetCategoryIdByToppingName(string toppName)
+        public long GetCategoryIdByToppingName (string toppName)
         {
-            return context.Toppings.Where(t => t.Name == toppName).Select(t => t.CategoryId).FirstOrDefault();
+            return context.Toppings.Where(t => t.Name == toppName).
+                    Select(t => t.CategoryId).FirstOrDefault();
         }
         public IEnumerable<Category> GetToppCategories()
         {

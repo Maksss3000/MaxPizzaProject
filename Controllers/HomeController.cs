@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace MaxPizzaProject.Controllers
 {
@@ -11,21 +10,24 @@ namespace MaxPizzaProject.Controllers
     {
         private PizzeriaDbContext context;
         private IPizzaRepository pizzaRepo;
+        private IDrinkRepository drinkRepo;
         
         public Cart Cart { get; set; }
-        public HomeController(IPizzaRepository pizzaRep, PizzeriaDbContext ctx,Cart cartService)
+        public HomeController(IPizzaRepository pizzaRep, PizzeriaDbContext ctx,
+                              Cart cartService,IDrinkRepository drinkRep)
                               
         {
+            //Dependency Injection.
+            drinkRepo = drinkRep;
             pizzaRepo = pizzaRep;
             context = ctx;
 
-            //Dependency Injection.
             Cart = cartService;
         }
         public IActionResult Index()
         {
             ViewBag.Main = "Main";
-            return View();
+            return RedirectToAction(nameof(AllPizzas));
         }
 
         public IActionResult SpecificPizza(long pizzaId)
@@ -37,6 +39,17 @@ namespace MaxPizzaProject.Controllers
 
             return View(pizzaId);  
         }
+
+        [HttpGet]
+        public IActionResult GetDrinksBySize(long sizeId,string sizeName)
+        {
+            
+            ViewBag.Size = sizeName;
+
+            return View(drinkRepo.GetDrinksBySize(sizeId));
+         
+            }
+
         public IActionResult AllPizzas(string pizzaCatName)
         {
             ViewBag.SelectedCatName = pizzaCatName;
@@ -58,12 +71,8 @@ namespace MaxPizzaProject.Controllers
         [HttpPost]
         public IActionResult AddToCart(OrderInformation order)
         {
-          
                 Cart.AddItem(order);
-                return RedirectToAction(nameof(SeeCart)); 
-         
-            //Cart.AddItem(order);
-            //return RedirectToAction(nameof(SeeCart));    
+                return RedirectToAction(nameof(SeeCart));   
         }
 
         [HttpPost]

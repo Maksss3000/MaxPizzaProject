@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Size>
+
+    <li class="nav-item dropdown">
+        <div class="dropdown">
+            <a class=" btn btn-sm btn-outline-dark text-light dropdown-toggle" asp-action="Drinks" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                Drinks  <img src="icons/DrinkLogo/soft-drink.png" width="30" height="30" alt="pizza">
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                @foreach (Size s in Model)
+                {
+                    <li>
+                <a class="dropdown-item text-dark" 
+                   asp-route-sizeId="@s.Id" 
+                   asp-route-sizeName="@s.TheSize"
+                   asp-action="GetDrinksBySize">@s.TheSize</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </li>
