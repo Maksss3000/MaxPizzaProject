@@ -41,12 +41,20 @@ namespace MaxPizzaProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDrinksBySize(long sizeId,string sizeName)
+        public IActionResult GetDrinksBySize(string sizeName)
         {
-            
-            ViewBag.Size = sizeName;
 
-            return View(drinkRepo.GetDrinksBySize(sizeId));
+            long sizeId = drinkRepo.GetSizeIdBySizeName(sizeName);
+            if (sizeId != 0)
+            {
+                ViewBag.Size = sizeName;
+                return View(drinkRepo.GetDrinksBySize(sizeId));
+            }
+            else
+            {
+                return RedirectToAction(nameof(AllPizzas));
+            }
+           
          
             }
 

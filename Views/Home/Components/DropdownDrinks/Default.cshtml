@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Size>
+﻿@model IEnumerable<string>
 
     <li class="nav-item dropdown">
         <div class="dropdown">
@@ -7,13 +7,14 @@
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                @foreach (Size s in Model)
+                @foreach (string s in Model)
                 {
+                    
                     <li>
-                <a class="dropdown-item text-dark" 
-                   asp-route-sizeId="@s.Id" 
-                   asp-route-sizeName="@s.TheSize"
-                   asp-action="GetDrinksBySize">@s.TheSize</a>
+                <a class="dropdown-item text-dark"  
+                   asp-route-sizeName="@s"
+                   asp-action="GetDrinksBySize">@s</a>
+                       
                     </li>
                 }
             </ul>

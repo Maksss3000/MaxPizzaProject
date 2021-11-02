@@ -92,7 +92,8 @@ namespace MaxPizzaProject
                 endpoints.MapControllerRoute("cart", "Cart/",
                   new { Controller = "Home", action = "SeeCart" });
 
-               
+                endpoints.MapControllerRoute("drinks", "Drinks/{sizeName}",
+                    new { Controller = "Home", action = "GetDrinksBySize"});
 
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapBlazorHub();

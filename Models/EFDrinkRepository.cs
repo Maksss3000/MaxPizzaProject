@@ -14,14 +14,21 @@ namespace MaxPizzaProject.Models
             context = ctx;
         }
 
-         public IEnumerable<Size> Sizes => context.CategoriesSizes.
-           Include(s=>s.Size).Where(s=>s.Category.Type=="Drink").Select(s=>s.Size);
+         public IEnumerable<string> Sizes => context.CategoriesSizes.
+           Include(s=>s.Size).Where(s=>s.Category.Type=="Drink").Select(s=>s.Size.TheSize);
 
         public IEnumerable<Drink> GetDrinksBySize(long sizeId)
         {
+            
             return context.Drinks.
                 Include(c => c.Category).
                 ThenInclude(s => s.CategoriesSizes.Where(s => s.SizeId == sizeId));
         }
+
+        public long GetSizeIdBySizeName(string sizeName)
+        {
+            return context.Sizes.Where(s => s.TheSize == sizeName).Select(s => s.Id).FirstOrDefault();
+        }
+
     }
 }

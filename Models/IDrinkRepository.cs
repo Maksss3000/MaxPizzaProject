@@ -7,8 +7,9 @@ namespace MaxPizzaProject.Models
 {
    public interface IDrinkRepository
     {
-        public IEnumerable<Size> Sizes { get; }
+        public IEnumerable<string> Sizes { get; }
 
+        public long GetSizeIdBySizeName(string sizeName);
         public IEnumerable<Drink> GetDrinksBySize(long sizeId);
     }
 }
