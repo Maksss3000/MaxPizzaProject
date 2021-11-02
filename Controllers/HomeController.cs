@@ -45,11 +45,14 @@ namespace MaxPizzaProject.Controllers
         {
 
             long sizeId = drinkRepo.GetSizeIdBySizeName(sizeName);
+            
             if (sizeId != 0)
             {
                 ViewBag.Size = sizeName;
                 return View(drinkRepo.GetDrinksBySize(sizeId));
             }
+            //If there is no size with choosen size name.
+            //Redirecting to main page.
             else
             {
                 return RedirectToAction(nameof(AllPizzas));
