@@ -1,0 +1,74 @@
+﻿@model Product  
+
+@{
+    string actionName = "Add" + ViewBag.Product;
+}
+
+<partial name="_Validation" />
+
+@*
+
+    <input name="prodId" value="@SelectedPizza.Id" type="hidden" />
+    <input name="productName" value="@SelectedPizza.Name" type="hidden" />
+    <input name="totalPrice" value="@TotalPrice" type="hidden" />
+    <input name="size" value="@PizzaSize" type="hidden" />
+
+*@
+
+<form asp-action="@actionName" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <div><span asp-validation-for="Name" class="text-danger"></span></div>
+        <input type="text" asp-for="Name" class="form-control" id="Name" placeholder="@ViewBag.Product Name">
+    </div>
+    
+    <div class="form-group">
+        <label for="catId">Please Select @ViewBag.Product Category</label>
+        <div><span asp-validation-for="CategoryId" class="text-danger"></span></div>
+        <select class="form-control" id="Category" asp-for="CategoryId">
+            <option value="" selected disabled hidden>Choose Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.Id">@c.Name</option>
+            }
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <div><span asp-validation-for="Description" class="text-danger"></span></div>
+        <textarea class="form-control" asp-for="Description" id="Description" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="ImagePath">Choose @ViewBag.Product image</label>
+        <input type="file" value="" asp-for="ImagePath" class="form-control-file" id="imagepath">
+    </div>
+    <button class="btn btn-success" type="submit">Add</button>
+</form>
+
+
+
+
+
+
+
+
+@*
+    <ul>
+    @foreach(Category c in Model)
+                {
+        <li>@c.Name</li>
+        <li>@c.Id</li>
+        foreach(CategorySize s in c.CategoriesSizes)
+                    {
+                    <li> @s.Size.TheSize</li>
+                    <li>  @s.Price</li>
+
+                    }
+                }
+
+        </ul>
+
+*@

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<string> 
+
+
+<ul>
+
+@foreach(string productName in Model)
+            {
+    <li>
+    <a asp-action="ProductForm" asp-route-productName="@productName">@productName</a>
+    </li>
+            }
+
+    </ul>

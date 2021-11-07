@@ -50,6 +50,10 @@ namespace MaxPizzaProject.Models
                 //    Where(c => c.CategoryId == p.CategoryId).Select(p => p.Price).FirstOrDefault();
         }
 
-      
+        public void AddPizza(Pizza p)
+        {
+            context.Products.Add(p);
+            context.SaveChanges();
+        }
     }
 }

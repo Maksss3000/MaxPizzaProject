@@ -8,7 +8,7 @@ namespace MaxPizzaProject.Models
     public class Pizza : Product
     {
 
-        public string Description { get; set; }
+      //  public string Description { get; set; }
         /*
         public long Id { get; set; }
 

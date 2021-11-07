@@ -20,7 +20,7 @@ namespace MaxPizzaProject.Models
 
             if (!context.Pizzas.Any())
             {
-                
+
                 Size small = new Size
                 {
                     TheSize = "Small",
@@ -30,11 +30,11 @@ namespace MaxPizzaProject.Models
                 {
                     TheSize = "Medium"
                 };
-                
+
                 Size large = new Size
                 {
                     TheSize = "Large",
-                 
+
                 };
 
                 Size smallDrink = new Size
@@ -88,30 +88,30 @@ namespace MaxPizzaProject.Models
                     //Sizes = new List<Size> { small, large },
                     Description = "Classic Pizza",
                     Name = "Classic",
-                    Type="Pizza"
-                    
-                   // CategoriesSizes = new List<CategorySize>{ catSizeS2, catSizeL1 }
-                   // CategoriesSizes = new CategorySize {}
-                    
-                    
+                    Type = "Pizza"
+
+                    // CategoriesSizes = new List<CategorySize>{ catSizeS2, catSizeL1 }
+                    // CategoriesSizes = new CategorySize {}
+
+
                     //Prices=new List<Price> { p1,p3}
                 };
 
 
 
 
-               
+
 
                 //tom.Enrollments.Add(new Enrollment { Course = algorithms, EnrollmentDate = DateTime.Now });
                 //tom.Courses.Add(basics);
 
-                
+
                 Category hotty = new Category
                 {
                     //Sizes = new List<Size> { small, large },
                     Description = "Ruleta Pizza",
                     Name = "Ruleta",
-                    Type="Pizza"
+                    Type = "Pizza"
                     //CategoriesSizes = new List<CategorySize> { catSizeS2, catSizeL1 }
                     // CategoriesSizes = new CategorySize {}
 
@@ -121,11 +121,11 @@ namespace MaxPizzaProject.Models
 
                 Category mix = new Category
                 {
-                    
-                   // Sizes = new List<Size> { small, large },
+
+                    // Sizes = new List<Size> { small, large },
                     Description = "Pizza Mix",
                     Name = "Mix",
-                    Type="Pizza"
+                    Type = "Pizza"
                     //CategoriesSizes=new List<CategorySize> { catSizeS2,catSizeL1}
                     //Prices=new List<Price> { p1,p2}
                 };
@@ -144,21 +144,21 @@ namespace MaxPizzaProject.Models
                 Category meatTopping = new Category
                 {
                     Description = "Meat Topping",
-                    Name = "Meat Topping",
-                    Type="Topping"
+                    Name = "Meat",
+                    Type = "Topping"
                 };
 
                 Category cheeseTopping = new Category
                 {
                     Description = "Cheese Topping",
                     Name = "Cheese",
-                    Type="Topping"
-                    
+                    Type = "Topping"
+
                 };
 
                 Category drink = new Category
                 {
-                  
+
                     Name = "Drink",
                     Type = "Drink"
 
@@ -169,8 +169,8 @@ namespace MaxPizzaProject.Models
                 {
                     InStock = true,
                     Name = "Peperony",
-                    Category=meatTopping,
-                
+                    Category = meatTopping,
+
 
                 };
 
@@ -185,17 +185,17 @@ namespace MaxPizzaProject.Models
                 {
                     InStock = true,
                     Name = "Parmezan",
-                    Category=cheeseTopping
+                    Category = cheeseTopping
                 };
 
-                
 
-                context.Categories.AddRange(classic, mix, hotty, 
-                                            cheeseTopping, meatTopping,fish,drink);
-                context.Toppings.AddRange(peperony, parmezan,bakar);
-                
 
-                
+                context.Categories.AddRange(classic, mix, hotty,
+                                            cheeseTopping, meatTopping, fish, drink);
+                context.Toppings.AddRange(peperony, parmezan, bakar);
+
+
+
 
                 CategorySize catSizeS1 = new CategorySize
                 {
@@ -236,7 +236,7 @@ namespace MaxPizzaProject.Models
                         Size=large,
                         Price=85
                     },
-                    
+
                };
 
 
@@ -262,8 +262,8 @@ namespace MaxPizzaProject.Models
                 drink.CategoriesSizes.AddRange(sizesForDrink);
                 fish.CategoriesSizes.AddRange(sizesForFish);
                 classic.CategoriesSizes.Add(catSizeS1);
-                classic.CategoriesSizes.Add(new CategorySize { Size =large , Price = 55m });
-                mix.CategoriesSizes.Add(new CategorySize { Size = small,  Price = 25m });
+                classic.CategoriesSizes.Add(new CategorySize { Size = large, Price = 55m });
+                mix.CategoriesSizes.Add(new CategorySize { Size = small, Price = 25m });
                 mix.CategoriesSizes.Add(new CategorySize { Size = large, Price = 55m });
                 hotty.CategoriesSizes.AddRange(sizes);
 
@@ -287,7 +287,7 @@ namespace MaxPizzaProject.Models
                     InStock = true,
 
                 },
-               
+
 
                 new Drink
                 {
@@ -304,10 +304,15 @@ namespace MaxPizzaProject.Models
                     Category = drink,
                     InStock = true,
 
-                } 
-               
-                ); 
+                }
 
+                );
+
+               
+
+               
+
+              
 
                 context.Pizzas.AddRange(new Pizza
                 {

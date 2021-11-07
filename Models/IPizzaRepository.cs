@@ -15,5 +15,7 @@ namespace MaxPizzaProject.Models
         public decimal GetPizzaPrice(long sizeId, long categoryId);
 
         public IEnumerable<Category> GetAllPizzasCategories();
+
+        public void AddPizza(Pizza p);
     }
 }

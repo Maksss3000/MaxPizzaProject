@@ -18,7 +18,8 @@
                 <div>
                     <a asp-route-pizzaId="@p.Id" asp-action="SpecificPizza">
                         <img class="rounded img-thumbnail pizzaImage"
-                             src="/@p.ImagePath"
+                             @*src="/@p.ImagePath"*@
+                             src="@p.ImagePath"
                              alt="pizza" />
                     </a>
                 </div>
