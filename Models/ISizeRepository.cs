@@ -8,5 +8,9 @@ namespace MaxPizzaProject.Models
     public interface ISizeRepository
     {
         public Size GetSize(long sizeId);
+
+        IEnumerable<Size> GetAllExistedSizes();
+
+        Size GetSizeBySizeName(string sizeName);
     }
 }

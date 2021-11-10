@@ -13,5 +13,7 @@ namespace MaxPizzaProject.Models
         IEnumerable<Category> GetSpecificProductCategories(string productType);
 
         IEnumerable<string> GetAllExistedTypes();
+
+        void AddCategory(Category category);
     }
 }

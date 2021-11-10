@@ -1,0 +1,30 @@
+﻿@model Category
+@*
+    Category cheeseTopping = new Category
+                {
+                    Description = "Cheese Topping",
+                    Name = "Cheese",
+                    Type = "Topping"
+
+                };
+*@
+<form asp-action="AddCategory" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label for="catId">Please Select Type</label>
+        <div><span asp-validation-for="Type" class="text-danger"></span></div>
+        <select class="form-control" id="Type" asp-for="Type">
+            <option value="" selected disabled hidden>Choose Type for Category</option>
+            @foreach (String type in ViewBag.ExistedTypes)
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name">Please Enter Category Name</label>
+        <div><span asp-validation-for="Name" class="text-danger"></span></div>
+        <input type="text" asp-for="Name" class="form-control" id="Name" placeholder="Category Name">
+    </div>
+    <button class="btn btn-success mt-2" type="submit">Add</button>
+</form>

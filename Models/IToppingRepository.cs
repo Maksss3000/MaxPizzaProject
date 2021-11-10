@@ -18,5 +18,7 @@ namespace MaxPizzaProject.Models
         public IEnumerable<Category> GetToppCategories();
 
         public IEnumerable<Topping> GetToppingsByCategory(long catId);
+
+         void AddTopping(Topping topping);
     }
 }

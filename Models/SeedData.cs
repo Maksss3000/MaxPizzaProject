@@ -130,6 +130,8 @@ namespace MaxPizzaProject.Models
                     //Prices=new List<Price> { p1,p2}
                 };
 
+               
+
                 Category fish = new Category
                 {
 
@@ -228,6 +230,7 @@ namespace MaxPizzaProject.Models
                {
                     new CategorySize
                     {
+                        
                         Size=small,
                         Price=75
                     },
@@ -259,6 +262,7 @@ namespace MaxPizzaProject.Models
 
                 //classic.CategoriesSizes.Add(catSizeS1);
                 //mix.CategoriesSizes.Add(catSizeS1);
+               // cheeseHeaven.CategoriesSizes.AddRange(sizes);
                 drink.CategoriesSizes.AddRange(sizesForDrink);
                 fish.CategoriesSizes.AddRange(sizesForFish);
                 classic.CategoriesSizes.Add(catSizeS1);

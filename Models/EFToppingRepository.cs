@@ -68,6 +68,12 @@ namespace MaxPizzaProject.Models
 
             return price;
         }
+
+        public void AddTopping(Topping topping)
+        {
+                context.Products.Add(topping);
+                context.SaveChanges();
+        }
     }
 }
 

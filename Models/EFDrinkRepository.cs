@@ -15,7 +15,7 @@ namespace MaxPizzaProject.Models
         }
 
          public IEnumerable<string> Sizes => context.CategoriesSizes.
-           Include(s=>s.Size).Where(s=>s.Category.Type=="Drink").Select(s=>s.Size.TheSize);
+           Include(s=>s.Size).Where(s=>s.Category.Type=="Drink").Select(s=>s.Size.TheSize).Distinct();
 
         public IEnumerable<Drink> GetDrinksBySize(long sizeId)
         {
@@ -30,5 +30,10 @@ namespace MaxPizzaProject.Models
             return context.Sizes.Where(s => s.TheSize == sizeName).Select(s => s.Id).FirstOrDefault();
         }
 
+        public void AddDrink(Drink drink)
+        {
+            context.Products.Add(drink);
+            context.SaveChanges();
+        }
     }
 }

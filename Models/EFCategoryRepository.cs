@@ -16,6 +16,12 @@ namespace MaxPizzaProject.Models
             context = ctx;
         }
 
+        public void AddCategory(Category category)
+        {
+            context.Categories.Add(category);
+            context.SaveChanges();
+        }
+
         public IEnumerable<string> GetAllExistedTypes()
         {
             return context.Categories.Select(c => c.Type).Distinct();
@@ -23,7 +29,7 @@ namespace MaxPizzaProject.Models
 
         public Category GetCategoryById(long catId)
         {
-          return  context.Categories.Find(catId);
+          return  context.Categories.Include(s=>s.Sizes).FirstOrDefault(c=>c.Id==catId);
         }
 
 
