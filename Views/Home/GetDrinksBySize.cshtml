@@ -15,23 +15,27 @@
                         <form asp-action="AddToCart">
                             <div class="mt-4 align-items-center">
                                 <div class="mb-2">
-                                   
-                                    <h4 class="text-center text-white"> @d.Name</h4>
 
-                                        <input name="topp" value="@allAddedToppings" type="hidden" />
-                                        <input name="prodId" value="@d.Id" type="hidden" />
-                                        <input name="productName" value="@d.Name" type="hidden" />
-                                        <input name="size" value="@ViewBag.Size" type="hidden" />
-                                    
+                                    <h4 class="text-center text-white"> @d.Name</h4>
+                                    <div class="text-lg-center">
+                                        <a asp-action="ProductForm" asp-controller="Admin" asp-route-prodId="@d.Id" asp-route-productName="@d.GetType().Name" class="btn  btn-sm btn-warning text-center">Edit</a>
+                                        <a asp-action="ProductForm" asp-controller="Admin" asp-route-prodId="@d.Id" asp-route-productName="@d.GetType().Name" class="btn  btn-sm btn-danger text-center">Delete</a>
+                                    </div>
+                                  
+                                    <input name="topp" value="@allAddedToppings" type="hidden" />
+                                    <input name="prodId" value="@d.Id" type="hidden" />
+                                    <input name="productName" value="@d.Name" type="hidden" />
+                                    <input name="size" value="@ViewBag.Size" type="hidden" />
+
                                     @foreach (CategorySize cs in d.Category.CategoriesSizes)
                                     {
-                                        
+
                                         <h5 class="text-warning text-center">@cs.Price.ToString("c")</h5>
-                                 
-                                     
-                                     <div class="text-lg-center">
+
+
+                                        <div class="text-lg-center">
                                             <button type="submit" class="btn  btn-success">Add to Cart</button>
-                                        </div>   
+                                        </div>
                                         <input name="totalPrice" value="@cs.Price" type="hidden" />
 
                                     }

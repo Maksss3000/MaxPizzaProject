@@ -12,5 +12,9 @@ namespace MaxPizzaProject.Models
         IEnumerable<Size> GetAllExistedSizes();
 
         Size GetSizeBySizeName(string sizeName);
+
+        void AddSize(Size size);
+        
+          
     }
 }

@@ -74,6 +74,12 @@ namespace MaxPizzaProject.Models
                 context.Products.Add(topping);
                 context.SaveChanges();
         }
+
+        public void EditTopping(Topping topping)
+        {
+            context.Toppings.Update(topping);
+            context.SaveChanges();
+        }
     }
 }
 

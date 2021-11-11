@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<string> 
 
 
-<ul>
+
 
 @foreach(string productName in Model)
             {
-    <li>
-    <a asp-action="ProductForm" asp-route-productName="@productName">@productName</a>
-    </li>
+    
+    <a  class="btn  btn-success m-lg-2" asp-action="ProductForm" asp-route-productName="@productName">@productName</a>
+    
             }
 
-    </ul>
+    

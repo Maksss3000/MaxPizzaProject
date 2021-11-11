@@ -30,5 +30,11 @@ namespace MaxPizzaProject.Models
            return context.Sizes.Where(s => s.TheSize == sizeName).FirstOrDefault();
           
         }
+
+        public void AddSize(Size size)
+        {
+            context.Sizes.Add(size);
+            context.SaveChanges();
+        }
     }
 }

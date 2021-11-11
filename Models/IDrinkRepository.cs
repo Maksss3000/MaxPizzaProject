@@ -11,7 +11,8 @@ namespace MaxPizzaProject.Models
 
          long GetSizeIdBySizeName(string sizeName);
          IEnumerable<Drink> GetDrinksBySize(long sizeId);
-        void AddDrink(Drink drink);
+         void AddDrink(Drink drink);
+         void EditDrink(Drink drink);
 
 
     }

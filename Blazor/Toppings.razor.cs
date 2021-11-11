@@ -5,6 +5,7 @@ using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
+
 namespace MaxPizzaProject.Blazor
 {
     public partial class Toppings

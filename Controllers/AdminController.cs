@@ -43,21 +43,66 @@ namespace MaxPizzaProject.Controllers
             return View();
         }
 
+        public IActionResult SizeForm()
+        {
+            Size size = new Size();
+            return View(size);
+        }
+
+        [HttpPost]
+        public IActionResult AddSize (Size newSize)
+        {
+
+            SizeValidation(newSize);
+            
+            if (ModelState.IsValid)
+            {
+                sizeRepo.AddSize(newSize);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                Size size = new Size();
+                return View(nameof(SizeForm),size);
+            }
+           
+        }
+
+        public void SizeValidation(Size size)
+        {
+            if (string.IsNullOrEmpty(size.TheSize))
+            {
+                ModelState.AddModelError(string.Empty, "Please enter size");
+            }
+
+            if (sizeRepo.GetSizeBySizeName(size.TheSize) != null)
+            {
+                ModelState.AddModelError(string.Empty, 
+                                         "This size is already existed, enter another one.");
+            }
+        }
+
         [HttpGet]
-        public IActionResult ProductForm (string productName)
+        public IActionResult ProductForm (string productName,long prodId=0)
         {
             ViewBag.Product = productName;
 
             ViewBag.Categories = catRepo.GetSpecificProductCategories(productName);
-
-            Product p = new Product();
+            //To different Repository.
+            Product p = context.Products.FirstOrDefault(p => p.Id == prodId);
+            if (p==null)
+            {
+                 p = new Product();
+            }
+         
             return View(p);
             
         }
 
-        public IActionResult AddPizza(Pizza p)
+        [HttpPost]
+        public IActionResult AddOrUpdatePizza (Pizza p)
         {
-
+           
             ViewBag.Product = p.GetType().Name;
 
             Category c=ProductValidation(p);
@@ -66,20 +111,19 @@ namespace MaxPizzaProject.Controllers
             {
                 p.ImagePath = "img/Pizzas/" + p.ImagePath;
                 p.Category = c;
-                pizzaRepo.AddPizza(p);
+                //Add new Pizza or Updating existing one.
+                pizzaRepo.EditPizza(p);
                 return RedirectToAction("AllPizzas", "Home");
             }
            
             else
             {
-                return NotValid();
-               // ViewBag.Categories = catRepo.GetSpecificProductCategories(ViewBag.Product);
-               // return View("ProductForm");
+                return NotValid(p);
             }
         }
 
 
-        public IActionResult AddDrink (Drink drink)
+        public IActionResult AddOrUpdateDrink (Drink drink)
         {
 
             ViewBag.Product = drink.GetType().Name;
@@ -90,20 +134,21 @@ namespace MaxPizzaProject.Controllers
             {
                 drink.ImagePath = "img/Drinks/" + drink.ImagePath;
                 drink.Category = c;
-                drinkRepo.AddDrink(drink);
+                //drinkRepo.AddDrink(drink);
+                drinkRepo.EditDrink(drink);
                 return RedirectToAction("GetDrinksBySize", "Home", 
                                     new { sizeName = drink.Category.Sizes.First().TheSize });
             }
 
             else
             {
-                return NotValid();
+                return NotValid(drink);
                
             }
         }
 
 
-        public IActionResult AddTopping (Topping topping)
+        public IActionResult AddOrUpdateTopping(Topping topping)
         {
 
             ViewBag.Product = topping.GetType().Name;
@@ -114,15 +159,15 @@ namespace MaxPizzaProject.Controllers
             {
                 topping.ImagePath = "img/Toppings/" + topping.ImagePath;
                 topping.Category = c;
-                toppRepo.AddTopping(topping);
-
+                // toppRepo.AddTopping(topping);
+                toppRepo.EditTopping(topping);
                 return RedirectToAction("AllPizzas", "Home");
                                     
             }
 
             else
             {
-                return NotValid();
+                return NotValid(topping);
             }
         }
 
@@ -149,9 +194,9 @@ namespace MaxPizzaProject.Controllers
             }
             else
             {
-                Category c = new Category();
+               // Category c = new Category();
                 ViewBag.ExistedTypes = catRepo.GetAllExistedTypes();
-                return View(nameof(CategoryForm),c);
+                return View("CategoryForm");
             }
             
         }
@@ -221,9 +266,9 @@ namespace MaxPizzaProject.Controllers
             //If Model State Not Valid.
             else
             {
-                CategorySize catSize = new CategorySize();
+              //  CategorySize catSize = new CategorySize();
                 ViewBag.ExistedSizes = sizeRepo.GetAllExistedSizes();
-                return View(nameof(SizePriceForm),catSize);
+                return View(nameof(SizePriceForm));
             }
 
         }
@@ -265,10 +310,19 @@ namespace MaxPizzaProject.Controllers
             return c;
         }
 
-        public IActionResult NotValid()
+        public IActionResult NotValid(Product product)
         {
             ViewBag.Categories = catRepo.GetSpecificProductCategories(ViewBag.Product);
-            return View("ProductForm");
+            Product p = context.Products.FirstOrDefault(p=>p.Id==product.Id);
+            if (p != null)
+            {
+                 p = context.Products.FirstOrDefault(p => p.Id == product.Id);
+            }
+            else
+            {
+                p = new Product();
+            }
+            return View("ProductForm",p);
         }
         
     }

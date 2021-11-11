@@ -26,7 +26,7 @@ else
             <div>
 
                 <img class="rounded img-thumbnail"
-                     src="@SelectedPizza.ImagePath"  
+                     src="@SelectedPizza.ImagePath"
                      alt="pizza" />
 
             </div>
@@ -44,7 +44,7 @@ else
             @foreach (Size s in SelectedPizza.Category.Sizes)
             {
 
-                 
+
                 <button type="button" class=" btn btn-@GetClass(s.TheSize) mt-3 "
                         @onclick="@(()=>ChangePizzaSize(s.Id,SelectedPizza.CategoryId,s.TheSize))">
                     @s.TheSize
@@ -111,15 +111,16 @@ else
                     @foreach (Topping t in ToppingsOfSpecCategory)
                     {
 
-                        <div class="list-group-item list-group-item-primary">
-                    
-                            <button type="button"
-                                    class="btn-sm text-dark bg-warning "
-                                    @onclick="@(()=>AddTopping(t.Name))">
-                                @t.Name
-                            </button>
-                            
-                        </div>
+                    <div class="list-group-item list-group-item-primary">
+
+                        <button type="button"
+                                class="btn-sm text-dark bg-warning "
+                                @onclick="@(()=>AddTopping(t.Name))">
+                            @t.Name
+                        </button>
+                        <a class="btn btn-sm btn-warning m-lg-2" href="/ProductForm/@t.GetType().Name/@t.Id">Edit</a>
+                        <a class="btn btn-sm btn-danger m-lg-2" href="/ProductForm/@t.GetType().Name/@t.Id">Delete</a>
+                    </div>
 
                     }
                 </div>

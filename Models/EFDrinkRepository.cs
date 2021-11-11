@@ -35,5 +35,12 @@ namespace MaxPizzaProject.Models
             context.Products.Add(drink);
             context.SaveChanges();
         }
+
+
+        public void EditDrink(Drink drink)
+        {
+            context.Drinks.Update(drink);
+            context.SaveChanges();
+        }
     }
 }
