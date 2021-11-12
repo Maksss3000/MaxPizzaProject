@@ -21,5 +21,7 @@ namespace MaxPizzaProject.Models
          void AddTopping(Topping topping);
 
         void EditTopping(Topping topping);
+
+        void DeleteTopping(long toppId);
     }
 }

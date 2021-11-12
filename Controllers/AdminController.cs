@@ -100,6 +100,14 @@ namespace MaxPizzaProject.Controllers
         }
 
         [HttpPost]
+        public IActionResult DeleteProduct(long prodId)
+        {
+            Product product = context.Products.FirstOrDefault(p => p.Id == prodId);
+            pizzaRepo.DeleteProduct(product);
+            return RedirectToAction("AllPizzas", "Home");
+        }
+
+        [HttpPost]
         public IActionResult AddOrUpdatePizza (Pizza p)
         {
            

@@ -61,5 +61,11 @@ namespace MaxPizzaProject.Models
             context.Pizzas.Update(p);
             context.SaveChanges();
         }
+
+        public void DeleteProduct(Product product)
+        {
+            context.Products.Remove(product);
+            context.SaveChanges();
+        }
     }
 }

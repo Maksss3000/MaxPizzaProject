@@ -112,14 +112,21 @@ else
                     {
 
                     <div class="list-group-item list-group-item-primary">
+                        @if (ToppingPrice(SelectedCatId, PizzaSizeId) != 0)
+                        {
+                            <button type="button"
+                                    class="btn-sm text-dark bg-warning "
+                                    @onclick="@(()=>AddTopping(t.Name))">
+                                @t.Name
+                            </button>
+                            @*
+                            Just Admin will be admitted to this actions.
+                            *@
+                            <a class="btn btn-sm btn-warning m-lg-2" href="/ProductForm/@t.GetType().Name/@t.Id">Edit</a>
+                            <a class="btn btn-sm btn-danger m-lg-2" @onclick="@(()=>DeleteTopping(t.Id))">Delete</a>
+                        }
 
-                        <button type="button"
-                                class="btn-sm text-dark bg-warning "
-                                @onclick="@(()=>AddTopping(t.Name))">
-                            @t.Name
-                        </button>
-                        <a class="btn btn-sm btn-warning m-lg-2" href="/ProductForm/@t.GetType().Name/@t.Id">Edit</a>
-                        <a class="btn btn-sm btn-danger m-lg-2" href="/ProductForm/@t.GetType().Name/@t.Id">Delete</a>
+
                     </div>
 
                     }
@@ -151,10 +158,11 @@ else
                         <th class="text-dark">
                             @if (ToppingPrice(c.Id, PizzaSizeId) != 0)
                             {
+
                                 @ToppPrice.ToString("c")
+                              
                             }
-
-
+                            
                         </th>
 
                         <th class="text-dark">

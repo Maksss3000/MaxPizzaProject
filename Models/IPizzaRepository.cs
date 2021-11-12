@@ -18,5 +18,7 @@ namespace MaxPizzaProject.Models
 
         public void EditPizza(Pizza p);
         public void AddPizza(Pizza p);
+
+        void DeleteProduct(Product product);
     }
 }

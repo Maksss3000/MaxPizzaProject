@@ -12,49 +12,57 @@
 
                         @foreach (Drink d in Model)
                         {
-                        <form asp-action="AddToCart">
-                            <div class="mt-4 align-items-center">
-                                <div class="mb-2">
+                            <form asp-action="">
 
-                                    <h4 class="text-center text-white"> @d.Name</h4>
-                                    <div class="text-lg-center">
-                                        <a asp-action="ProductForm" asp-controller="Admin" asp-route-prodId="@d.Id" asp-route-productName="@d.GetType().Name" class="btn  btn-sm btn-warning text-center">Edit</a>
-                                        <a asp-action="ProductForm" asp-controller="Admin" asp-route-prodId="@d.Id" asp-route-productName="@d.GetType().Name" class="btn  btn-sm btn-danger text-center">Delete</a>
-                                    </div>
-                                  
-                                    <input name="topp" value="@allAddedToppings" type="hidden" />
-                                    <input name="prodId" value="@d.Id" type="hidden" />
-                                    <input name="productName" value="@d.Name" type="hidden" />
-                                    <input name="size" value="@ViewBag.Size" type="hidden" />
+                                <div class="mt-4 align-items-center">
+                                    <div class="mb-2">
 
-                                    @foreach (CategorySize cs in d.Category.CategoriesSizes)
-                                    {
-
-                                        <h5 class="text-warning text-center">@cs.Price.ToString("c")</h5>
-
-
+                                        <h4 class="text-center text-white"> @d.Name</h4>
+                                        @*
+                                        Just Admin will be admitted to this actions.
+                                        *@
                                         <div class="text-lg-center">
-                                            <button type="submit" class="btn  btn-success">Add to Cart</button>
+                                            <a asp-action="ProductForm" asp-controller="Admin" asp-route-prodId="@d.Id" asp-route-productName="@d.GetType().Name" class="btn  btn-sm btn-warning text-center">Edit</a>
+                                            <button type="submit" value="@d.Id" asp-action="DeleteProduct" asp-controller="Admin" method="post" class="btn  btn-sm btn-danger text-center">
+                                                Delete
+                                            </button>
+
                                         </div>
-                                        <input name="totalPrice" value="@cs.Price" type="hidden" />
 
-                                    }
+                                        <input name="topp" value="@allAddedToppings" type="hidden" />
+                                        <input name="prodId" value="@d.Id" type="hidden" />
+                                        <input name="productName" value="@d.Name" type="hidden" />
+                                        <input name="size" value="@ViewBag.Size" type="hidden" />
+                                       
+
+                                        @foreach (CategorySize cs in d.Category.CategoriesSizes)
+                                        {
+
+                                            <h5 class="text-warning text-center">@cs.Price.ToString("c")</h5>
+
+
+                                            <div class="text-lg-center">
+                                                <button asp-action="AddToCart" asp-controller="Home" type="submit" class="btn  btn-success">Add to Cart</button>
+                                            </div>
+                                            <input name="totalPrice" value="@cs.Price" type="hidden" />
+
+                                        }
+
+                                    </div>
+
+                                    <div>
+
+                                        <img class="rounded img-thumbnail pizzaImage"
+                                             src="@d.ImagePath"
+                                             alt="drink" />
+
+                                    </div>
 
                                 </div>
+                            </form>
+                        }
 
-                                <div>
-
-                                    <img class="rounded img-thumbnail pizzaImage"
-                                         src="@d.ImagePath"
-                                         alt="drink" />
-
-                                </div>
-
-                            </div>
-                        </form>
-                                }
-
-                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -80,6 +80,17 @@ namespace MaxPizzaProject.Models
             context.Toppings.Update(topping);
             context.SaveChanges();
         }
+
+        public void DeleteTopping(long toppId)
+        {
+            Product topping = context.Toppings.Find(toppId);
+            if (topping != null)
+            {
+                context.Products.Remove(topping);
+                context.SaveChanges();
+            }
+           
+        }
     }
 }
 
