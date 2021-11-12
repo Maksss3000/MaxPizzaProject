@@ -32,6 +32,14 @@ ___
 ![SpicificPizza](ReadMe/img/Order.jpg "SpecificPizza")
 ### User Cart
 ![Cart](ReadMe/img/Cart.jpg "Cart")
+___
+## Administration.
+___
+ **Admin Can:**
+  + **Add/Edit/Delete Products.**
+  + **Add/Edit/Delete Sizes.**
+  + **Add/Edit/Delete Category.**
 
-
+![Administration](ReadMe/img/Administration.jpg "Administration")
+  
 
