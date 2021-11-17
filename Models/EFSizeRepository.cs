@@ -36,5 +36,11 @@ namespace MaxPizzaProject.Models
             context.Sizes.Add(size);
             context.SaveChanges();
         }
+
+        public void AddOrUpdateSize(Size size)
+        {
+            context.Sizes.Update(size);
+            context.SaveChanges();
+        }
     }
 }

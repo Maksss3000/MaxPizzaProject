@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Size>
+
+<h3 class="text-center text-warning"> Edit Size</h3> 
+
+<div class="dropdown text-center">
+    <a class=" btn btn-sm btn-outline-dark text-light dropdown-toggle"  role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        Choose Size
+    </a>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        @foreach (Size s in Model)
+        {
+        <li>
+            <div class="mt-2">
+                <h5 style="display:inline">@s.TheSize</h5>
+                <a class=" text-warning " asp-action="SizeForm" asp-route-sizeId="@s.Id">Edit</a>
+            </div>
+            
+        </li>
+               
+     
+          
+        }
+    </ul>
+</div>
+           

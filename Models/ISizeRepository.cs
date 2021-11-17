@@ -14,6 +14,9 @@ namespace MaxPizzaProject.Models
         Size GetSizeBySizeName(string sizeName);
 
         void AddSize(Size size);
+
+        void AddOrUpdateSize(Size size);
+       
         
           
     }

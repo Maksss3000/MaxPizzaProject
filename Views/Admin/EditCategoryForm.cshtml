@@ -1,0 +1,67 @@
+﻿@model Category
+<div class="row">
+
+    <div class="col-3">
+        <form asp-action="">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"> Category Name</label>
+                <div><span asp-validation-for="Name" class="text-danger"></span></div>
+                <input type="text" asp-for="Name" class="form-control" placeholder="Category Name">
+            </div>
+            <button class="btn btn-sm btn-warning mt-1" asp-action="UpdateCatName">Update Name</button>
+            <div class="mt-2">
+                Update Price
+                <input type="text" name="price" class="form-control" value="" placeholder="Enter Price" />
+            </div>
+
+
+            @foreach (CategorySize catSize in Model.CategoriesSizes)
+            {
+                <div class="mt-2">
+                    <h5>
+                        @catSize.Size.TheSize
+                        @catSize.Price.ToString("c")
+                    </h5>
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <button class="btn btn-sm btn-warning" type="submit" asp-route-sizeId="@catSize.SizeId" asp-action="UpdateCatPrice">Update</button>
+                    <button class="btn btn-sm btn-danger" type="submit" asp-route-sizeId="@catSize.SizeId" asp-action="RemoveSize">Remove</button>
+                </div>
+
+            }
+
+
+            @if (ViewBag.ExistedSizes != null)
+            {
+                <div class="form-group">
+                    <label for="catId">Please Select Size</label>
+                    <div><span class="text-danger"></span></div>
+                    <select class="form-control" name="sizeName">
+                        <option value="" selected disabled hidden>Size for Category</option>
+
+                        @foreach (Size size in ViewBag.ExistedSizes)
+                        {
+                            <option value="@size.TheSize">@size.TheSize</option>
+
+                        }
+
+                        }
+                    </select>
+                </div><div class="form-group">
+                    <label></label>
+                    <div><span class="text-danger"></span></div>
+                    <input type="text" class="form-control" name="sizePrice" placeholder="Price for Selected Size">
+                </div><button class="btn  btn-success mt-2" type="submit" asp-action="AddSizeToCategory">Add</button>
+            }
+            else
+            {
+                <div class="mt-4">
+                    <a class="btn  btn-success" asp-action="EditCategory" asp-route-catId="@Model.Id">Add new Size</a>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+
+

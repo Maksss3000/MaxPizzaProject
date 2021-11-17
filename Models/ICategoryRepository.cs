@@ -14,6 +14,11 @@ namespace MaxPizzaProject.Models
 
         IEnumerable<string> GetAllExistedTypes();
 
+        void RemoveCategory(Category category);
         void AddCategory(Category category);
+        void UpdateCategory(Category category);
+
+        CategorySize GetSpecificCatSize(long catId,long sizeId);
+       
     }
 }

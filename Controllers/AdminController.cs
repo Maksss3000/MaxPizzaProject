@@ -22,7 +22,7 @@ namespace MaxPizzaProject.Controllers
         private ISizeRepository sizeRepo;
 
         public AdminController(PizzeriaDbContext ctx, IDrinkRepository drinkRep,
-                               IPizzaRepository pizzaRep,ICategoryRepository catRep,IToppingRepository topRep, ISizeRepository sizRep)
+                               IPizzaRepository pizzaRep, ICategoryRepository catRep, IToppingRepository topRep, ISizeRepository sizRep)
         {
             context = ctx;
             pizzaRepo = pizzaRep;
@@ -31,41 +31,145 @@ namespace MaxPizzaProject.Controllers
             toppRepo = topRep;
             sizeRepo = sizRep;
         }
-      
+
         public IActionResult Index()
         {
+
             return View();
         }
 
         [HttpGet]
-        public IActionResult ChooseProductForAdding ()
+        public IActionResult ChooseProductForAdding()
         {
             return View();
         }
 
-        public IActionResult SizeForm()
+
+        [HttpGet]
+        public IActionResult ChooseCategoryToEdit(string type)
         {
-            Size size = new Size();
-            return View(size);
+            //To EFCategoryRepo.
+            //return View(context.Categories.Where(c => c.Type == type));
+            return View(catRepo.GetSpecificProductCategories(type));
         }
 
         [HttpPost]
-        public IActionResult AddSize (Size newSize)
+        public IActionResult RemoveCategory(long catId)
+        {
+            Category cat = catRepo.GetCategoryById(catId);
+            catRepo.RemoveCategory(cat);
+            return View("ChooseCategoryToEdit", catRepo.GetSpecificProductCategories(cat.Type));  
+        }
+
+        [HttpGet]
+        public IActionResult EditCategory(long catId)
+        {
+            Category category = catRepo.GetCategoryById(catId);
+            //Existed Sizes of specific category.
+            IEnumerable<Size> sizesOfSpecCat = category.Sizes;
+            //All sizes except of  sizes of specific category.
+            IEnumerable<Size> exsSizes = sizeRepo.GetAllExistedSizes().Except(sizesOfSpecCat);
+            if (exsSizes.Count() != 0)
+            {
+                ViewBag.ExistedSizes = exsSizes;
+            }
+            else
+            {
+                ViewBag.ExistedSizes = null;
+            }
+
+            return View("EditCategoryForm", category);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveSize(long Id, long sizeId)
         {
 
-            SizeValidation(newSize);
+            CategorySize catSize = catRepo.GetSpecificCatSize(Id, sizeId);
+            Category category = catRepo.GetCategoryById(Id);
+
+            category.CategoriesSizes.Remove(catSize);
+            catRepo.UpdateCategory(category);
+
+            return View("EditCategoryForm", category);
+            
+        }
+
+        public IActionResult UpdateCatPrice(long Id, long sizeId, decimal price)
+        {
+            Category category = catRepo.GetCategoryById(Id);
+            //Model Check of Price.
+            if (price <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Please enter Positive Price");
+            }
+            if(ModelState.IsValid)
+            {
+                CategorySize catSize = catRepo.GetSpecificCatSize(Id,sizeId);
+                catSize.Price = price;
+                catRepo.UpdateCategory(category);
+            }
+
+            return View("EditCategoryForm", category);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCatName(string name, long Id)
+        {
+            Category category = catRepo.GetCategoryById(Id);
+            //Model State.
+            if (string.IsNullOrEmpty(name))
+            {
+                ModelState.AddModelError(nameof(category.Name), "Please enter category name");
+                
+            }
+            if(ModelState.IsValid)
+            {
+                category.Name = name;
+                catRepo.UpdateCategory(category);
+            }
+            return View("EditCategoryForm", category);
+        }
+
+        [HttpGet]
+        public IActionResult SizeForm(long sizeId=0)
+        {
+         
+            Size size;
+
+            if (sizeId == 0)
+            {
+              size= new Size();
+              
+            }
+            else
+            {
+                size = sizeRepo.GetSize(sizeId);
+                if (size == null)
+                {
+                    size = new Size();
+                }
+            }
+
+            return View(size);
+        }
+        
+        [HttpPost]
+        public IActionResult AddOrEditSize(Size size)
+        {
+
+            SizeValidation(size);
             
             if (ModelState.IsValid)
             {
-                sizeRepo.AddSize(newSize);
+                sizeRepo.AddOrUpdateSize(size);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                Size size = new Size();
+                
                 return View(nameof(SizeForm),size);
             }
-           
         }
 
         public void SizeValidation(Size size)
@@ -88,14 +192,14 @@ namespace MaxPizzaProject.Controllers
             ViewBag.Product = productName;
 
             ViewBag.Categories = catRepo.GetSpecificProductCategories(productName);
-            //To different Repository.
-            Product p = context.Products.FirstOrDefault(p => p.Id == prodId);
-            if (p==null)
+            
+            Product product = pizzaRepo.GetProduct(prodId);
+            if (product==null)
             {
-                 p = new Product();
+                 product = new Product();
             }
          
-            return View(p);
+            return View(product);
             
         }
 
@@ -108,25 +212,25 @@ namespace MaxPizzaProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddOrUpdatePizza (Pizza p)
+        public IActionResult AddOrUpdatePizza (Pizza pizza)
         {
            
-            ViewBag.Product = p.GetType().Name;
+            ViewBag.Product = pizza.GetType().Name;
 
-            Category c=ProductValidation(p);
+            Category category=ProductValidation(pizza);
           
             if (ModelState.IsValid)
             {
-                p.ImagePath = "img/Pizzas/" + p.ImagePath;
-                p.Category = c;
+                pizza.ImagePath = "img/Pizzas/" + pizza.ImagePath;
+                pizza.Category = category;
                 //Add new Pizza or Updating existing one.
-                pizzaRepo.EditPizza(p);
+                pizzaRepo.EditPizza(pizza);
                 return RedirectToAction("AllPizzas", "Home");
             }
            
             else
             {
-                return NotValid(p);
+                return NotValid(pizza);
             }
         }
 
@@ -142,8 +246,8 @@ namespace MaxPizzaProject.Controllers
             {
                 drink.ImagePath = "img/Drinks/" + drink.ImagePath;
                 drink.Category = c;
-                //drinkRepo.AddDrink(drink);
                 drinkRepo.EditDrink(drink);
+
                 return RedirectToAction("GetDrinksBySize", "Home", 
                                     new { sizeName = drink.Category.Sizes.First().TheSize });
             }
@@ -161,16 +265,15 @@ namespace MaxPizzaProject.Controllers
 
             ViewBag.Product = topping.GetType().Name;
 
-            Category c = ProductValidation(topping);
+            Category category = ProductValidation(topping);
 
             if (ModelState.IsValid)
             {
                 topping.ImagePath = "img/Toppings/" + topping.ImagePath;
-                topping.Category = c;
-                // toppRepo.AddTopping(topping);
+                topping.Category = category;
                 toppRepo.EditTopping(topping);
-                return RedirectToAction("AllPizzas", "Home");
-                                    
+
+                return RedirectToAction("AllPizzas", "Home");                    
             }
 
             else
@@ -182,9 +285,10 @@ namespace MaxPizzaProject.Controllers
 
         public IActionResult CategoryForm()
         {
-            Category c = new Category();
+            Category category = new Category();
             ViewBag.ExistedTypes=catRepo.GetAllExistedTypes();
-            return View(c);            
+
+            return View(category);            
         }
 
         [HttpPost]
@@ -202,7 +306,7 @@ namespace MaxPizzaProject.Controllers
             }
             else
             {
-               // Category c = new Category();
+               
                 ViewBag.ExistedTypes = catRepo.GetAllExistedTypes();
                 return View("CategoryForm");
             }
@@ -274,12 +378,36 @@ namespace MaxPizzaProject.Controllers
             //If Model State Not Valid.
             else
             {
-              //  CategorySize catSize = new CategorySize();
                 ViewBag.ExistedSizes = sizeRepo.GetAllExistedSizes();
                 return View(nameof(SizePriceForm));
             }
 
         }
+
+        public IActionResult AddSizeToCategory(long id,string sizeName,decimal sizePrice)
+        {
+            Category category = catRepo.GetCategoryById(id);
+
+            //Validation
+            if (string.IsNullOrEmpty(sizeName))
+            {
+                ModelState.AddModelError(string.Empty, "Please choose size to add");
+            }
+            if (sizePrice <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Please enter positive price for size");
+            }
+            if (ModelState.IsValid)
+            {
+                Size size = sizeRepo.GetSizeBySizeName(sizeName);
+                CategorySize catSize = new CategorySize { Size = size, Price = sizePrice };
+                category.CategoriesSizes.Add(catSize);
+                catRepo.UpdateCategory(category);
+
+            }
+            return View("EditCategoryForm", category);
+        }
+
         public void SizePriceValidation(CategorySize categorySize)
         {
             if (categorySize.Size == null)

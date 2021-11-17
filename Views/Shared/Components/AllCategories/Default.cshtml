@@ -1,0 +1,9 @@
+﻿@model IEnumerable<string>
+
+@foreach(string type in Model)
+            {
+                <div>
+                    <a class="btn  btn-success mt-2" asp-route-type="@type" asp-action="ChooseCategoryToEdit">@type</a>
+                </div>
+               
+            }

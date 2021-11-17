@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Category>
+  
+<div class="row mt-2">
+    <div class="col-3">
+        
+        <div class="text-center">
+            <h4 class="text-danger">Warning:</h4>
+            <p class="text-warning mt-0">By deleting Category,you will delete all Products of this Category.</p>
+        </div>
+       
+        @foreach (Category category in Model)
+        {
+            <form class="text-center" asp-action="RemoveCategory">
+                <div class="mt-4">
+                    <h3 class="text-white">@category.Name</h3>
+                    <a class="btn  btn-sm btn-warning" asp-action="EditCategory" asp-route-catId="@category.Id">Edit</a>
+                    <input name="catId" value="@category.Id" type="hidden" />
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </div>
+            </form>
+
+
+        }
+    </div>
+</div>
+

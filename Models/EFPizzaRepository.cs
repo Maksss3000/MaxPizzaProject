@@ -25,7 +25,8 @@ namespace MaxPizzaProject.Models
         }
         public IEnumerable<Category> GetAllPizzasCategories()
         {
-            return context.Categories.Where(c => c.Type == "Pizza");
+              return context.Categories.Where(c => c.Type == "Pizza");
+         
         }
 
         public Pizza GetPizzaById(long id)
@@ -66,6 +67,11 @@ namespace MaxPizzaProject.Models
         {
             context.Products.Remove(product);
             context.SaveChanges();
+        }
+
+        public Product GetProduct(long prodId)
+        {
+            return context.Products.FirstOrDefault(p => p.Id == prodId);
         }
     }
 }

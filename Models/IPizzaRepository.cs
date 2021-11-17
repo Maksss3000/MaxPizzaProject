@@ -16,6 +16,7 @@ namespace MaxPizzaProject.Models
 
         public IEnumerable<Category> GetAllPizzasCategories();
 
+        Product GetProduct(long prodId);
         public void EditPizza(Pizza p);
         public void AddPizza(Pizza p);
 

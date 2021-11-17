@@ -22,9 +22,15 @@ namespace MaxPizzaProject.Models
             context.SaveChanges();
         }
 
+        public void UpdateCategory(Category category)
+        {
+            context.Categories.Update(category);
+            context.SaveChanges();
+        }
         public IEnumerable<string> GetAllExistedTypes()
         {
             return context.Categories.Select(c => c.Type).Distinct();
+            
         }
 
         public Category GetCategoryById(long catId)
@@ -36,7 +42,18 @@ namespace MaxPizzaProject.Models
         public IEnumerable<Category> GetSpecificProductCategories(string productType)
         {
             return context.Categories.Include(c => c.CategoriesSizes).Include(s => s.Sizes).Where(c => c.Type == productType);
+           
         }
 
+        public void RemoveCategory(Category category)
+        {
+            context.Categories.Remove(category);
+            context.SaveChanges();
+        }
+
+        public CategorySize GetSpecificCatSize(long catId, long sizeId)
+        {
+            return context.CategoriesSizes.Where(c => c.CategoryId == catId && c.SizeId == sizeId).FirstOrDefault();
+        }
     }
 }
