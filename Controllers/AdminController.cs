@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MaxPizzaProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Microsoft.VisualBasic.CompilerServices;
 namespace MaxPizzaProject.Controllers
 {
     [AutoValidateAntiforgeryToken]
+    [Authorize(Roles ="Admins")]
     public class AdminController : Controller
     {
 
@@ -34,7 +36,7 @@ namespace MaxPizzaProject.Controllers
 
         public IActionResult Index()
         {
-
+            
             return View();
         }
 
@@ -56,8 +58,18 @@ namespace MaxPizzaProject.Controllers
         [HttpPost]
         public IActionResult RemoveCategory(long catId)
         {
+           
             Category cat = catRepo.GetCategoryById(catId);
-            catRepo.RemoveCategory(cat);
+            if (catRepo.GetSpecificProductCategories(cat.Type).Count() == 1)
+            {
+                ModelState.AddModelError(string.Empty, 
+                                        "You can`t Delete last existed Category of this type.");
+            }
+            if (ModelState.IsValid)
+            {
+                catRepo.RemoveCategory(cat);
+            }
+            
             return View("ChooseCategoryToEdit", catRepo.GetSpecificProductCategories(cat.Type));  
         }
 

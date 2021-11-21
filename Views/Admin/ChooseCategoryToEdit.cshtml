@@ -1,17 +1,18 @@
 ﻿@model IEnumerable<Category>
   
 <div class="row mt-2">
-    <div class="col-3">
-        
+    <div class="col-3 offset-2 text-center">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="text-center">
             <h4 class="text-danger">Warning:</h4>
             <p class="text-warning mt-0">By deleting Category,you will delete all Products of this Category.</p>
         </div>
-       
+    </div>
+    <div class="col-2">
         @foreach (Category category in Model)
         {
             <form class="text-center" asp-action="RemoveCategory">
-                <div class="mt-4">
+                <div class="mt-3">
                     <h3 class="text-white">@category.Name</h3>
                     <a class="btn  btn-sm btn-warning" asp-action="EditCategory" asp-route-catId="@category.Id">Edit</a>
                     <input name="catId" value="@category.Id" type="hidden" />

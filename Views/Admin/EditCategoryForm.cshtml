@@ -1,7 +1,7 @@
 ﻿@model Category
 <div class="row">
 
-    <div class="col-3">
+    <div class="col">
         <form asp-action="">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -51,7 +51,7 @@
                     <label></label>
                     <div><span class="text-danger"></span></div>
                     <input type="text" class="form-control" name="sizePrice" placeholder="Price for Selected Size">
-                </div><button class="btn  btn-success mt-2" type="submit" asp-action="AddSizeToCategory">Add</button>
+                </div><button class="btn  btn-success mt-2" type="submit" asp-action="AddSizeToCategory">Add new Size</button>
             }
             else
             {

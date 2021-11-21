@@ -1,7 +1,9 @@
 using MaxPizzaProject.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,7 @@ namespace MaxPizzaProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
@@ -63,7 +66,24 @@ namespace MaxPizzaProject
 
             });
 
+            //Identity Service.
+            services.AddDbContext<IdentityContext>
+                (opts => opts.UseSqlServer
+                                    (Configuration["ConnectionStrings:IdentityConnection"]));
 
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                                        .AddEntityFrameworkStores<IdentityContext>();
+
+            services.Configure<IdentityOptions>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+            });
+
+
+            services.Configure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+                opts => { opts.LoginPath = "/Users/Login";
+                          opts.AccessDeniedPath = "/Users/AccessDenied";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +103,7 @@ namespace MaxPizzaProject
 
             app.UseRouting();
 
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -115,6 +135,9 @@ namespace MaxPizzaProject
                 endpoints.MapBlazorHub();
 
                 endpoints.MapFallbackToController("AllPizzas", "Home");
+
+
+                endpoints.MapRazorPages();
             });
 
             SeedData.Seed(ctx);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MaxPizzaProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -74,12 +75,14 @@ namespace MaxPizzaProject.Controllers
            
         }
 
+        [Authorize(Roles ="User,Admin")]
         public IActionResult SeeCart()
         {
             return View("Cart",Cart);
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public IActionResult AddToCart(OrderInformation order)
         {
                 Cart.AddItem(order);

@@ -1,50 +1,87 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MaxPizzaProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>
+        @if (ViewBag.Title == null)
+        {
+            ViewBag.Title = "Pizza Max";
+        }
+        @ViewBag.Title
+    </title>
+    <link rel="stylesheet" href="/lib/twitter-bootstrap/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/lib/twitter-bootstrap/css/bootstrap-reboot.min.css" />
+    <link rel="stylesheet" href="/lib/twitter-bootstrap/css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" href="/css/pizzas.css" />
+    <script src="https://kit.fontawesome.com/5b3f1e6611.js" crossorigin="anonymous"></script>
+    <base href="~/" />
+
+    @if (ViewBag.Main == "Main")
+    {
+        <link rel="stylesheet" href="/css/main.css" />
+    }
+
+    <script src="/js/script.js"></script>
 </head>
+
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MaxPizzaProject</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+    <div class="@(ViewBag.Main=="Admin"? "container-fluid bg-light min-vh-100":"container-fluid bg-light min-vh-100") pb-4">
+        @*
+            // Maybe Use Render Section ??
+        *@
+        @if (ViewBag.Main != "Main")
+        {
+            <header>
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+                            <span class="navbar-brand mb-0 h1 text-light">Pizza Max</span>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-route-pizzaCatName="" asp-action="AllPizzas">
+                                            Pizzas
+                                            <img src="icons/PizzaLogo/pizza.png" width="30" height="30" alt="pizza">
+                                        </a>
+
+                                    </li>
+
+                                    <vc:dropdown-drinks />
+
+                                </ul>
+
+                            </div>
+
+
+
+                            <div class="col bg-dark text-light text-center">
+
+                                <a asp-action="SeeCart" class=" nav-link text-warning">
+                                    Cart
+                                    <img src="icons/CartLogo/carts.png" width="30" height="30" alt="cart">
+                                </a>
+
+                            </div>
+
+                        </nav>
+
+
+                    </div>
+
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+            </header>
+        }
+
+
+        @RenderBody()
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - MaxPizzaProject - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @RenderSection("Scripts", required: false)
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

@@ -49,9 +49,7 @@ namespace MaxPizzaProject.Models
                .UsingEntity<CategorySize>
                  (j => j.HasOne(m => m.Size).WithMany(c => c.CategoriesSizes),
                  j => j.HasOne(m => m.Category).WithMany(c => c.CategoriesSizes));
-
-
-            
+           
         }
     }
 

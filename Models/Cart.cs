@@ -9,6 +9,7 @@ namespace MaxPizzaProject.Models
 
         public List<OrderInformation> Orders { get; set; } = new List<OrderInformation>();
 
+        
         public virtual void AddItem(OrderInformation order)
         {
             Orders.Add(order);

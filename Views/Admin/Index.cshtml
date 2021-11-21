@@ -1,17 +1,18 @@
-﻿<h3 class="text-center text-white bg-primary">Hello Admin</h3>
+﻿<h3 class="text-center text-black bg-warning">Hello Admin</h3>
 <div class="row">
     <div class="col-2">
-        <h3 class="text text-white">Creating</h3>
-        <a class="btn btn-success mb-2" asp-action="ChooseProductForAdding">Add new Product</a>
-        <a class="btn btn-success mb-2" asp-action="CategoryForm">Add new Category</a>
-        <a class="btn btn-success mb-2" asp-action="SizeForm">Add new Size</a>
+        <h3 class="text text-white">Create</h3>
+        <a class="btn btn-success mb-2" asp-action="ChooseProductForAdding">New Product</a>
+        <a class="btn btn-success mb-2" asp-action="CategoryForm">New Category</a>
+        <a class="btn btn-success mb-2" asp-action="SizeForm">New Size</a>
     </div>
-    <div class="col-3">
-        <vc:all-sizes />
-    </div>
-    <div class="col">
-        <h3 class="text-dark"><span class="text-warning">Edit</span>/<span class="text-danger">Delete</span> <br>Category:</h3>
+    <div class="col-2">
+        <h3 class="text-white">Edit Category</h3>
         <vc:all-categories />
+    </div>
+    <div class="col-2">
+       
+        <vc:all-sizes />
     </div>
 </div>
 
