@@ -23,10 +23,15 @@
         <label>Password</label>
         <input class="form-control" type="password" asp-for="Password" />
     </div>
+    
+        <button class="btn btn-primary d-lg-inline-block" type="submit">Log In</button>
+        <a class="btn text-black btn-sm m-lg-3" asp-page="/Users/LogOut">
 
-    <button class="btn btn-primary" type="submit">Log In</button>
+            <img src="icons/LogInOut/logout.png" width="30" height="30" alt="pizza">
+            Log-Out
+        </a>
 
-    <div class="mt-1">
+    <div class="mt-2">
         <span class="text-warning small">Don`t have an account ?</span>
         <div>
             <a asp-page="/Users/Register" class="btn btn-primary" type="submit">Register</a>
