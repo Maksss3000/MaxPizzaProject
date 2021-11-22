@@ -119,11 +119,6 @@ namespace MaxPizzaProject.Blazor
             return SelectedToppingCategoryName == topCat ? "success" : "outline-dark";
         }
 
-        public void DeleteTopping (long toppId)
-        {
-            ToppContext.DeleteTopping(toppId);   
-        }
-
         public void SeeToppings(MouseEventArgs e, long catId,string topCatName)
         {
             SelectedCatId = catId;

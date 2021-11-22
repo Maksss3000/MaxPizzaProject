@@ -119,11 +119,7 @@ else
                                     @onclick="@(()=>AddTopping(t.Name))">
                                 @t.Name
                             </button>
-                            @*
-                            Just Admin will be admitted to this actions.
-                            *@
-                            <a class="btn btn-sm btn-warning m-lg-2" href="/ProductForm/@t.GetType().Name/@t.Id">Edit</a>
-                            <a class="btn btn-sm btn-danger m-lg-2" @onclick="@(()=>DeleteTopping(t.Id))">Delete</a>
+                           
                         }
 
 

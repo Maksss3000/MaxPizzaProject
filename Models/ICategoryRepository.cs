@@ -14,6 +14,8 @@ namespace MaxPizzaProject.Models
 
         IEnumerable<string> GetAllExistedTypes();
 
+        IEnumerable<Product> GetProductsOfSpecificCategory(long catId);
+
         void RemoveCategory(Category category);
         void AddCategory(Category category);
         void UpdateCategory(Category category);

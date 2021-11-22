@@ -45,6 +45,12 @@ namespace MaxPizzaProject.Models
            
         }
 
+        public IEnumerable<Product> GetProductsOfSpecificCategory(long catId)
+        {
+           
+            return context.Products.Where(c => c.CategoryId == catId);
+        }
+
         public void RemoveCategory(Category category)
         {
             context.Categories.Remove(category);

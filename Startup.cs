@@ -1,3 +1,4 @@
+using Advanced.Models;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -140,6 +141,7 @@ namespace MaxPizzaProject
                 endpoints.MapRazorPages();
             });
 
+            IdentitySeedData.CreateAdminAccount(app.ApplicationServices, Configuration);
             SeedData.Seed(ctx);
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.VisualBasic.CompilerServices;
 namespace MaxPizzaProject.Controllers
 {
     [AutoValidateAntiforgeryToken]
-    [Authorize(Roles ="Admins")]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 
@@ -77,6 +77,10 @@ namespace MaxPizzaProject.Controllers
         public IActionResult EditCategory(long catId)
         {
             Category category = catRepo.GetCategoryById(catId);
+            if (category == null)
+            {
+                return RedirectToAction("AllPizzas", "Home");
+            }
             //Existed Sizes of specific category.
             IEnumerable<Size> sizesOfSpecCat = category.Sizes;
             //All sizes except of  sizes of specific category.
@@ -90,6 +94,17 @@ namespace MaxPizzaProject.Controllers
                 ViewBag.ExistedSizes = null;
             }
 
+
+            IEnumerable<Product> products = catRepo.GetProductsOfSpecificCategory(category.Id);
+            
+            if (products.Count() !=0)
+            {
+                ViewBag.Products = products;
+            }
+            else
+            {
+                ViewBag.Products = null;
+            }
             return View("EditCategoryForm", category);
         }
 
@@ -222,7 +237,7 @@ namespace MaxPizzaProject.Controllers
             pizzaRepo.DeleteProduct(product);
             return RedirectToAction("AllPizzas", "Home");
         }
-
+        
         [HttpPost]
         public IActionResult AddOrUpdatePizza (Pizza pizza)
         {

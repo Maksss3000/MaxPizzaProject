@@ -13,26 +13,7 @@
             <div class="mt-4 align-items-center">
                 <div class="text-black mb-2">
                     <h4> @p.Name</h4>
-                    @*Just Admin will be admitted to this actions.*@
-                    <form asp-action="DeleteProduct" asp-controller="Admin" method="post">
-
-                        <input type="hidden" name="prodId" value="@p.Id" />
-                        <a asp-action="ProductForm"
-                           asp-controller="Admin"
-                           asp-route-prodId="@p.Id"
-                           asp-route-productName="@p.GetType().Name"
-                           class="btn  btn-sm btn-warning">
-
-                            Edit
-                        </a>
-                        <button type="submit" class="btn  btn-sm btn-danger m-lg-1">
-                            Delete
-                        </button>
-
-                    </form>
-
-
-
+                    
                 </div>
 
                 <div>
