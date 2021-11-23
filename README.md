@@ -1,5 +1,7 @@
 #  Pizza Project
 ### *I am still working on this project. So I will update Readme file when I will add new features to the project.*
+
+**Link to Video [ RegularUser](https://youtu.be/QbwW5p5Hpcc)**
 ### About the Project.
 
 *Technologies* :

@@ -111,11 +111,11 @@ else
                     @foreach (Topping t in ToppingsOfSpecCategory)
                     {
 
-                    <div class="list-group-item list-group-item-primary">
+                    <div>
                         @if (ToppingPrice(SelectedCatId, PizzaSizeId) != 0)
                         {
                             <button type="button"
-                                    class="btn-sm text-dark bg-warning "
+                                    class="btn-sm text-dark bg-warning mt-2"
                                     @onclick="@(()=>AddTopping(t.Name))">
                                 @t.Name
                             </button>

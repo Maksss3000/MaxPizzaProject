@@ -50,8 +50,7 @@ namespace MaxPizzaProject.Controllers
         [HttpGet]
         public IActionResult ChooseCategoryToEdit(string type)
         {
-            //To EFCategoryRepo.
-            //return View(context.Categories.Where(c => c.Type == type));
+           
             return View(catRepo.GetSpecificProductCategories(type));
         }
 
@@ -94,7 +93,7 @@ namespace MaxPizzaProject.Controllers
                 ViewBag.ExistedSizes = null;
             }
 
-
+            /*
             IEnumerable<Product> products = catRepo.GetProductsOfSpecificCategory(category.Id);
             
             if (products.Count() !=0)
@@ -105,6 +104,8 @@ namespace MaxPizzaProject.Controllers
             {
                 ViewBag.Products = null;
             }
+            */
+            GetProductsOfSpecCategory(catId);
             return View("EditCategoryForm", category);
         }
 
@@ -117,7 +118,7 @@ namespace MaxPizzaProject.Controllers
 
             category.CategoriesSizes.Remove(catSize);
             catRepo.UpdateCategory(category);
-
+            GetProductsOfSpecCategory(Id);
             return View("EditCategoryForm", category);
             
         }
@@ -136,7 +137,7 @@ namespace MaxPizzaProject.Controllers
                 catSize.Price = price;
                 catRepo.UpdateCategory(category);
             }
-
+            GetProductsOfSpecCategory(Id);
             return View("EditCategoryForm", category);
         }
 
@@ -155,6 +156,7 @@ namespace MaxPizzaProject.Controllers
                 category.Name = name;
                 catRepo.UpdateCategory(category);
             }
+            GetProductsOfSpecCategory(Id);
             return View("EditCategoryForm", category);
         }
 
@@ -432,6 +434,7 @@ namespace MaxPizzaProject.Controllers
                 catRepo.UpdateCategory(category);
 
             }
+            GetProductsOfSpecCategory(id);
             return View("EditCategoryForm", category);
         }
 
@@ -488,5 +491,20 @@ namespace MaxPizzaProject.Controllers
             return View("ProductForm",p);
         }
         
+
+        public void GetProductsOfSpecCategory(long catId)
+        {
+            IEnumerable<Product> products = catRepo.GetProductsOfSpecificCategory(catId);
+
+            if (products.Count() != 0)
+            {
+                ViewBag.Products = products;
+            }
+            else
+            {
+                ViewBag.Products = null;
+            }
+        }
+
     }
 }
