@@ -80,7 +80,9 @@ namespace MaxPizzaProject
                 opts.User.RequireUniqueEmail = true;
             });
 
-
+            //Redirection Path , when user need to pass Authentication
+            //Or Authorization.
+            
             services.Configure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
                 opts => { opts.LoginPath = "/Users/Login";
                           opts.AccessDeniedPath = "/Users/AccessDenied";

@@ -131,6 +131,7 @@ namespace MaxPizzaProject.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Please enter Positive Price");
             }
+            
             if(ModelState.IsValid)
             {
                 CategorySize catSize = catRepo.GetSpecificCatSize(Id,sizeId);

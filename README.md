@@ -34,6 +34,16 @@ ___
 ![SpicificPizza](ReadMe/img/Order.jpg "SpecificPizza")
 ### User Cart
 ![Cart](ReadMe/img/Cart.jpg "Cart")
+
+___
+##  Authentication and Authorization.
+___
+**User Can:**
+  + Register.
+  + Log-In.
+  + Log-Out.
+  
+  ![Registration](ReadMe/img/Registration.jpg "Registration")
 ___
 ## Administration.
 ___
