@@ -29,6 +29,7 @@ namespace MaxPizzaProject.Controllers
         {
             ViewBag.Main = "Main";
             return RedirectToAction(nameof(AllPizzas));
+            
         }
 
         public IActionResult SpecificPizza(long pizzaId)
