@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<Pizza>
-
+@{ 
+    string typeName = Model.GetType().GetGenericArguments()[0].Name;
+}
 <div>
     <div class="row">
         <div class="col-3">
-            <vc:pizza-categories />
+            <vc:type-categories type="@typeName" />
         </div>
         <div class="col-8 d-flex flex-row justify-content-lg-between flex-wrap ">
 
@@ -17,7 +19,7 @@
                 </div>
 
                 <div>
-                    <a asp-route-pizzaId="@p.Id" asp-action="SpecificPizza">
+                    <a asp-route-ProductId ="@p.Id" asp-action="SpecificProduct">
                         <img class="rounded img-thumbnail pizzaImage"
                              @*src="/@p.ImagePath"*@
                              src="@p.ImagePath"

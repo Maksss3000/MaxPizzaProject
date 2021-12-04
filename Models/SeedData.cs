@@ -20,7 +20,7 @@ namespace MaxPizzaProject.Models
 
             if (!context.Pizzas.Any())
             {
-
+               
                 Size small = new Size
                 {
                     TheSize = "Small",
@@ -166,6 +166,11 @@ namespace MaxPizzaProject.Models
 
                 };
 
+                Category iceCream = new Category
+                {
+                    Name = "Ice-Cream",
+                    Type = "Snack"
+                };
 
                 Topping peperony = new Topping
                 {
@@ -193,7 +198,7 @@ namespace MaxPizzaProject.Models
 
 
                 context.Categories.AddRange(classic, mix, hotty,
-                                            cheeseTopping, meatTopping, fish, drink);
+                                            cheeseTopping, meatTopping, fish, drink,iceCream);
                 context.Toppings.AddRange(peperony, parmezan, bakar);
 
 
@@ -209,6 +214,12 @@ namespace MaxPizzaProject.Models
                 {
                     Size = small,
                     Price = 35m
+                };
+
+                CategorySize iceCreamCatSize = new CategorySize
+                {
+                    Size = small,
+                    Price = 10m
                 };
 
                 CategorySize[] sizes = new CategorySize[]
@@ -278,6 +289,8 @@ namespace MaxPizzaProject.Models
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = small, Price = 6 });
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = large, Price = 10 });
 
+
+                iceCream.CategoriesSizes.Add(iceCreamCatSize);
                 //classic.CategoriesSizes.Add(catSizeL1);
 
                 //mix.CategoriesSizes.Add(catSizeS1);
@@ -312,11 +325,16 @@ namespace MaxPizzaProject.Models
 
                 );
 
-               
 
-               
+                context.Snacks.Add(new Snack
+                {
+                    Name="Chocolate-Ice-Creame",
+                    Category = iceCream,
+                    ImagePath = "img/Snacks/chocolateIceCream.jpg",
+                    InStock = true,
+                    Description = "Choclate-Ice-Cream"
 
-              
+                });
 
                 context.Pizzas.AddRange(new Pizza
                 {

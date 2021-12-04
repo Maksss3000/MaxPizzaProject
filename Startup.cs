@@ -51,6 +51,7 @@ namespace MaxPizzaProject
             services.AddScoped<ISizeRepository, EFSizeRepository>();
             services.AddScoped<IDrinkRepository, EFDrinkRepository>();
             services.AddScoped<ICategoryRepository, EFCategoryRepository>();
+            services.AddScoped<ISnackRepository, EFSnackRepository>();
 
             //Admin Services.
             services.AddScoped<IAdminRepository, EFAdminRepository>();
@@ -111,11 +112,14 @@ namespace MaxPizzaProject
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("specificPizza", "Pizza/{pizzaId:long}",
-                   new { Controller = "Home", action = "SpecificPizza" });
+                endpoints.MapControllerRoute("specificProduct", "Product/{productId:long}",
+                   new { Controller = "Home", action = "SpecificProduct" });
 
-                endpoints.MapControllerRoute("category", "Category/{pizzaCatName}",
+                endpoints.MapControllerRoute("category", "Pizza/{CatName}",
                    new { Controller = "Home", action = "AllPizzas" });
+
+                endpoints.MapControllerRoute("category", "Snack/{CatName}",
+                  new { Controller = "Home", action = "AllSnacks" });
 
                 endpoints.MapControllerRoute("cart", "Cart/",
                   new { Controller = "Home", action = "SeeCart" });

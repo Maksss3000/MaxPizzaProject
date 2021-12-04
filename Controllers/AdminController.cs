@@ -50,7 +50,8 @@ namespace MaxPizzaProject.Controllers
         [HttpGet]
         public IActionResult ChooseCategoryToEdit(string type)
         {
-           
+     
+            
             return View(catRepo.GetSpecificProductCategories(type));
         }
 
@@ -115,7 +116,7 @@ namespace MaxPizzaProject.Controllers
 
             CategorySize catSize = catRepo.GetSpecificCatSize(Id, sizeId);
             Category category = catRepo.GetCategoryById(Id);
-
+            
             category.CategoriesSizes.Remove(catSize);
             catRepo.UpdateCategory(category);
             GetProductsOfSpecCategory(Id);
@@ -313,6 +314,29 @@ namespace MaxPizzaProject.Controllers
         }
 
 
+        public IActionResult AddOrUpdateSnack(Snack snackProduct)
+        {
+            ViewBag.Product = snackProduct.GetType().Name;
+
+            Category category = ProductValidation(snackProduct);
+
+            if (ModelState.IsValid)
+            {
+                snackProduct.ImagePath = "img/Snacks/" + snackProduct.ImagePath;
+                snackProduct.Category = category;
+                //Remove to EFSnackRepo.
+                context.Snacks.Update(snackProduct);
+                context.SaveChanges();
+               // toppRepo.EditTopping(to);
+                return RedirectToAction("AllPizzas", "Home");
+            }
+
+            else
+            {
+                return NotValid(snackProduct);
+            }
+        }
+
         public IActionResult CategoryForm()
         {
             Category category = new Category();
@@ -416,8 +440,8 @@ namespace MaxPizzaProject.Controllers
 
         public IActionResult AddSizeToCategory(long id,string sizeName,decimal sizePrice)
         {
+          
             Category category = catRepo.GetCategoryById(id);
-
             //Validation
             if (string.IsNullOrEmpty(sizeName))
             {

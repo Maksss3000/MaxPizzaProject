@@ -3,14 +3,16 @@ using MaxPizzaProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MaxPizzaProject.Migrations
 {
     [DbContext(typeof(PizzeriaDbContext))]
-    partial class PizzeriaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211201114443_Snacks")]
+    partial class Snacks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,7 +187,7 @@ namespace MaxPizzaProject.Migrations
             modelBuilder.Entity("MaxPizzaProject.Models.Snack", b =>
                 {
                     b.HasOne("MaxPizzaProject.Models.Category", "Category")
-                        .WithMany("Snacks")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -209,8 +211,6 @@ namespace MaxPizzaProject.Migrations
                     b.Navigation("CategoriesSizes");
 
                     b.Navigation("Pizzas");
-
-                    b.Navigation("Snacks");
 
                     b.Navigation("Toppings");
                 });

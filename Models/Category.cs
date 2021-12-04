@@ -22,6 +22,8 @@ namespace MaxPizzaProject.Models
         public IEnumerable<Pizza> Pizzas { get; set; }
 
         public IEnumerable<Topping> Toppings { get; set; }
+
+        public IEnumerable<Snack> Snacks { get; set; }
        
     }
 }

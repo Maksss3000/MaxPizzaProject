@@ -1,10 +1,8 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-
 
 namespace MaxPizzaProject.Blazor
 {
@@ -13,25 +11,44 @@ namespace MaxPizzaProject.Blazor
       
         protected override void OnInitialized()
         {
-            
-            //Initialization of Size that selected.
-            foreach (Size s in SelectedPizza.Category.Sizes.Reverse()){
-                PizzaSizeId = s.Id;
-                PizzaSize = s.TheSize;
-            }
-
-            PizzaPrice = PizzaContext.GetPizzaPrice(PizzaSizeId,SelectedPizza.CategoryId);
-            TotalPrice = PizzaPrice;
-
-
-            //Initialization of Topping Category that selected.
-            foreach (Category c in ToppCategories.Reverse())
+            //If Product is from Snack Type.
+            if(SelectedProduct is Snack snack)
             {
-                SelectedCatId = c.Id;
-                SelectedToppingCategoryName = c.Name;
+                snack = SnackContext.GetSnackById(ProductId);
+                //Initialization of Size that selected.
+                foreach (Size s in snack.Category.Sizes.Reverse())
+                {
+                    ProductSizeId = s.Id;
+                    ProductSize = s.TheSize;
+                }
+            }
+            //If Product is from Pizza Type.
+            else if(SelectedProduct is Pizza pizza)
+            {
+                pizza = PizzaContext.GetPizzaById(ProductId);
+                //Initialization of Size that selected.
+                foreach (Size s in pizza.Category.Sizes.Reverse())
+                {
+                    ProductSizeId = s.Id;
+                    ProductSize = s.TheSize;
+                }
+
+
+                //Initialization of Topping Category that selected.
+                foreach (Category c in ToppCategories.Reverse())
+                {
+                    SelectedCatId = c.Id;
+                    SelectedToppingCategoryName = c.Name;
+                }
+
+                ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(SelectedCatId);
+
+
             }
 
-            ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(SelectedCatId);
+            ProductPrice = PizzaContext.GetPizzaPrice(ProductSizeId, SelectedProduct.CategoryId);
+            TotalPrice = ProductPrice;
+
         }
 
         [Inject]
@@ -40,12 +57,19 @@ namespace MaxPizzaProject.Blazor
         [Inject]
         public IPizzaRepository PizzaContext { get; set; }
 
-
+        [Inject]
+        public PizzeriaDbContext Context { get; set; }
+        
+        [Inject]
+        public ISnackRepository SnackContext { get; set; }
+       
         [Parameter]
-        public long PizzaId { get; set; }
+        public long ProductId { get; set; }
 
-        public Pizza SelectedPizza => PizzaContext.GetPizzaById(PizzaId);
-
+        
+        public Product SelectedProduct => Context.Products.FirstOrDefault(p => p.Id == ProductId);
+        
+            
         public decimal ToppPrice { get; set; } 
 
         public IEnumerable<Category> ToppCategories => ToppContext.GetToppCategories();
@@ -53,13 +77,13 @@ namespace MaxPizzaProject.Blazor
 
         IEnumerable<Topping> ToppingsOfSpecCategory { get; set; }
 
-        public decimal PizzaPrice { get; set; }
+        public decimal ProductPrice { get; set; }
 
         public decimal TotalPrice { get; set; } 
 
-        public long PizzaSizeId { get; set; }
+        public long ProductSizeId { get; set; }
 
-        public string PizzaSize { get; set; }
+        public string ProductSize { get; set; }
 
         public long SelectedCatId { get; set; }
 
@@ -68,19 +92,21 @@ namespace MaxPizzaProject.Blazor
         
         Dictionary<string, int> allAddedToppings = new Dictionary<string, int>();
        
-        public void ChangePizzaSize(long sizeId, long categoryId, string pizzaSize)
+        public void ChangeProductSize(long sizeId, long categoryId, string pizzaSize)
         {
-            PizzaPrice = PizzaContext.GetPizzaPrice(sizeId, categoryId);
-            PizzaSize = pizzaSize;
-            PizzaSizeId = sizeId;
-            TotalPrice = PizzaPrice;
+            ProductPrice = PizzaContext.GetPizzaPrice(sizeId, categoryId);
+            ProductSize = pizzaSize;
+            ProductSizeId = sizeId;
+            TotalPrice = ProductPrice;
 
             allAddedToppings.Clear();
+
+           
         }
 
         public void AddTopping(string toppName)
         {
-            decimal price = ToppingPrice(SelectedCatId, PizzaSizeId);
+            decimal price = ToppingPrice(SelectedCatId, ProductSizeId);
             TotalPrice += price;
 
             
@@ -101,7 +127,7 @@ namespace MaxPizzaProject.Blazor
             {
                 int quantity = allAddedToppings[toppName];
                 long catId = ToppContext.GetCategoryIdByToppingName(toppName);
-                decimal toppPrice = ToppingPrice(catId, PizzaSizeId) * quantity;
+                decimal toppPrice = ToppingPrice(catId, ProductSizeId) * quantity;
                 TotalPrice -= toppPrice;
 
                 allAddedToppings.Remove(toppName);
@@ -111,7 +137,7 @@ namespace MaxPizzaProject.Blazor
 
         public string GetClass(string size)
         {
-            return PizzaSize == size ? "success" : "outline-dark";
+            return ProductSize == size ? "success" : "outline-dark";
         }
 
         public string GetToppClass(string topCat)
@@ -125,7 +151,7 @@ namespace MaxPizzaProject.Blazor
             SelectedToppingCategoryName = topCatName;
             ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(catId);
 
-           // return ToppingsOfSpecCategory;
+          
         }
 
         public decimal ToppingPrice(long toppCatId, long sizeId)

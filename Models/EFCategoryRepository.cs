@@ -35,7 +35,7 @@ namespace MaxPizzaProject.Models
 
         public Category GetCategoryById(long catId)
         {
-          return  context.Categories.Include(s=>s.Sizes).FirstOrDefault(c=>c.Id==catId);
+          return  context.Categories.Include(c => c.CategoriesSizes).Include(s=>s.Sizes).FirstOrDefault(c=>c.Id==catId);
         }
 
 

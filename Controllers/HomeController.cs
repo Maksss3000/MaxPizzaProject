@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -12,15 +13,17 @@ namespace MaxPizzaProject.Controllers
         private PizzeriaDbContext context;
         private IPizzaRepository pizzaRepo;
         private IDrinkRepository drinkRepo;
+        private ISnackRepository snackRepo;
         
         public Cart Cart { get; set; }
         public HomeController(IPizzaRepository pizzaRep, PizzeriaDbContext ctx,
-                              Cart cartService,IDrinkRepository drinkRep)
+                              Cart cartService,IDrinkRepository drinkRep,ISnackRepository snackRep)
                               
         {
             //Dependency Injection.
             drinkRepo = drinkRep;
             pizzaRepo = pizzaRep;
+            snackRepo = snackRep;
             context = ctx;
 
             Cart = cartService;
@@ -32,14 +35,32 @@ namespace MaxPizzaProject.Controllers
             
         }
 
-        public IActionResult SpecificPizza(long pizzaId)
+        public IActionResult SpecificProduct(long productId)
         {
-            if (pizzaRepo.GetPizzaById(pizzaId) == null)
+
+            if (context.Products.FirstOrDefault(p => p.Id == productId) == null)
             {
                 return RedirectToAction(nameof(AllPizzas));
             }
+            return View(productId);  
+            
+        }
 
-            return View(pizzaId);  
+        [HttpGet]
+        public IActionResult AllSnacks(string CatName)
+        {
+
+            ViewBag.SelectedCatName = CatName;
+            
+            if (snackRepo.GetSnacksByCategoryName(CatName).Any() != true)
+            {
+                ViewBag.SelectedCatName = "";
+              
+                return View(snackRepo.Snacks);
+            }
+
+            return View(snackRepo.GetSnacksByCategoryName(CatName));
+
         }
 
         [HttpGet]
@@ -63,16 +84,16 @@ namespace MaxPizzaProject.Controllers
          
             }
 
-        public IActionResult AllPizzas(string pizzaCatName)
+        public IActionResult AllPizzas(string CatName)
         {
-            ViewBag.SelectedCatName = pizzaCatName;
-            if (pizzaRepo.GetPizzasByCategoryName(pizzaCatName).Any()!=true)
+            ViewBag.SelectedCatName = CatName;
+            if (pizzaRepo.GetPizzasByCategoryName(CatName).Any()!=true)
             {
                 ViewBag.SelectedCatName = "";
                 return View(pizzaRepo.Pizzas);
             }
            
-            return View(pizzaRepo.GetPizzasByCategoryName(pizzaCatName));
+            return View(pizzaRepo.GetPizzasByCategoryName(CatName));
            
         }
 

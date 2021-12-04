@@ -27,6 +27,8 @@ namespace MaxPizzaProject.Models
 
         public DbSet<Drink> Drinks { get; set; }
 
+        public DbSet<Snack> Snacks { get; set; }
+
         //public DbSet<Price> Prices { get; set; }
 
         

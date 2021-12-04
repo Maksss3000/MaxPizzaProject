@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Snack>
+@{ 
+    string typeName = Model.GetType().GetGenericArguments()[0].Name;
+}
+
+<div>
+    <div class="row">
+        <div class="col-3">
+           <vc:type-categories type="@typeName"/>
+        </div>
+        <div class="col-8 d-flex flex-row justify-content-lg-between flex-wrap ">
+
+            @foreach (Snack snack in Model)
+            {
+
+                <div class="mt-4 align-items-center">
+                    <div class="text-black mb-2">
+                        <h4> @snack.Name</h4>
+
+                    </div>
+
+                    <div>
+                        <a asp-route-productId="@snack.Id" asp-action="SpecificProduct">
+                            <img class="rounded img-thumbnail pizzaImage"
+                                 @*src="/@p.ImagePath"*@
+                                 src="@snack.ImagePath"
+                                 alt="snack" />
+                        </a>
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
