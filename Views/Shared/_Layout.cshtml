@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-        @if (ViewBag.Title == null)
+        @if (ViewBag.Title == null|| ViewBag.Title=="")
         {
             ViewBag.Title = "Pizza Max";
         }
@@ -19,11 +19,6 @@
     <script src="https://kit.fontawesome.com/5b3f1e6611.js" crossorigin="anonymous"></script>
     <base href="~/" />
 
-    @if (ViewBag.Main == "Main")
-    {
-        <link rel="stylesheet" href="/css/main.css" />
-    }
-
     <script src="/js/script.js"></script>
 </head>
 
@@ -34,8 +29,6 @@
         @*
         // Maybe Use Render Section ??
         *@
-        @if (ViewBag.Main != "Main")
-        {
         <header>
             <div class="row">
                 <div class="col-12">
@@ -94,10 +87,8 @@
             </div>
 
 </header>
-        }
-
-
-        @RenderBody()
+        
+       @RenderBody()
     </div>
     
     <script src="_framework/blazor.server.js"></script>

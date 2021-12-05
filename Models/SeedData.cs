@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaxPizzaProject.Models
@@ -10,11 +7,12 @@ namespace MaxPizzaProject.Models
     {
         public static void Seed(PizzeriaDbContext context)
         {
-            //Если существуют ожидающие Миграции.
+            //If there is some waiting Migrations.
             if (context.Database.GetPendingMigrations().Any())
             {
-                
-                //Применение всех ожидающих миграций к БД.
+
+                //Using All Waiting Migrations.(Like Update)
+                //dotnet ef database update --context [DBContext]
                 context.Database.Migrate();
             }
 
@@ -47,100 +45,43 @@ namespace MaxPizzaProject.Models
                     TheSize = "1.5L"
                 };
 
-                /*
-
-
-                //context.Prices.AddRange(p1,p2,p3);
-                context.Sizes.AddRange(small, large);
-
-                CategorySize catSizeS1 = new CategorySize
-                {
-                    Size = small,
-                    Price = 25m
-                };
-
-                CategorySize catSizeS2 = new CategorySize
-                {
-                    Size = small,
-                    Price = 35m
-                };
-
-                CategorySize catSizeL1 = new CategorySize
-                {
-                    Size = large,
-                    Price = 66m
-                };
-
-
-                CategorySize catSizeL2 = new CategorySize
-                {
-                    Size = large,
-                    Price = 90m
-                };
-
-                */
-
-                // context.CategoriesSizes.AddRange(catSizeL1, catSizeL2, catSizeS1, catSizeS2);
-                //context.SaveChanges();
+               
 
                 Category classic = new Category
                 {
-                    //Sizes = new List<Size> { small, large },
+                   
                     Description = "Classic Pizza",
                     Name = "Classic",
                     Type = "Pizza"
 
-                    // CategoriesSizes = new List<CategorySize>{ catSizeS2, catSizeL1 }
-                    // CategoriesSizes = new CategorySize {}
-
-
-                    //Prices=new List<Price> { p1,p3}
+                   
                 };
-
-
-
-
-
-
-                //tom.Enrollments.Add(new Enrollment { Course = algorithms, EnrollmentDate = DateTime.Now });
-                //tom.Courses.Add(basics);
-
 
                 Category hotty = new Category
                 {
-                    //Sizes = new List<Size> { small, large },
+                   
                     Description = "Ruleta Pizza",
                     Name = "Ruleta",
                     Type = "Pizza"
-                    //CategoriesSizes = new List<CategorySize> { catSizeS2, catSizeL1 }
-                    // CategoriesSizes = new CategorySize {}
-
-
-                    //Prices=new List<Price> { p1,p3}
+                   
                 };
 
                 Category mix = new Category
-                {
-
-                    // Sizes = new List<Size> { small, large },
+                { 
                     Description = "Pizza Mix",
                     Name = "Mix",
                     Type = "Pizza"
-                    //CategoriesSizes=new List<CategorySize> { catSizeS2,catSizeL1}
-                    //Prices=new List<Price> { p1,p2}
+                  
                 };
 
                
 
                 Category fish = new Category
-                {
-
-                    // Sizes = new List<Size> { small, large },
+                {   
                     Description = "Pizza with Fresh Fish",
                     Name = "Fish",
                     Type = "Pizza"
-                    //CategoriesSizes=new List<CategorySize> { catSizeS2,catSizeL1}
-                    //Prices=new List<Price> { p1,p2}
+                 
                 };
 
                 Category meatTopping = new Category
@@ -269,11 +210,6 @@ namespace MaxPizzaProject.Models
 
                };
 
-
-
-                //classic.CategoriesSizes.Add(catSizeS1);
-                //mix.CategoriesSizes.Add(catSizeS1);
-               // cheeseHeaven.CategoriesSizes.AddRange(sizes);
                 drink.CategoriesSizes.AddRange(sizesForDrink);
                 fish.CategoriesSizes.AddRange(sizesForFish);
                 classic.CategoriesSizes.Add(catSizeS1);
@@ -284,17 +220,14 @@ namespace MaxPizzaProject.Models
 
                 cheeseTopping.CategoriesSizes.Add(new CategorySize { Size = small, Price = 5 });
                 cheeseTopping.CategoriesSizes.Add(new CategorySize { Size = large, Price = 10 });
-                //cheeseTopping.CategoriesSizes.Add(new CategorySize { Size = medium, Price = 7 });
+                
 
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = small, Price = 6 });
                 meatTopping.CategoriesSizes.Add(new CategorySize { Size = large, Price = 10 });
 
 
                 iceCream.CategoriesSizes.Add(iceCreamCatSize);
-                //classic.CategoriesSizes.Add(catSizeL1);
-
-                //mix.CategoriesSizes.Add(catSizeS1);
-                //mix.CategoriesSizes.Add(catSizeL2);
+               
 
                 context.Drinks.AddRange(new Drink
                 {
@@ -394,8 +327,6 @@ namespace MaxPizzaProject.Models
                 );
 
                 context.SaveChanges();
-
-               
             }
         }
 

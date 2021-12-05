@@ -16,11 +16,12 @@ namespace MaxPizzaProject.Controllers
         private ISnackRepository snackRepo;
         
         public Cart Cart { get; set; }
+        //Dependency Injection.
         public HomeController(IPizzaRepository pizzaRep, PizzeriaDbContext ctx,
                               Cart cartService,IDrinkRepository drinkRep,ISnackRepository snackRep)
                               
         {
-            //Dependency Injection.
+            
             drinkRepo = drinkRep;
             pizzaRepo = pizzaRep;
             snackRepo = snackRep;
@@ -30,20 +31,21 @@ namespace MaxPizzaProject.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.Main = "Main";
+            
             return RedirectToAction(nameof(AllPizzas));
             
         }
 
+        [HttpGet]
         public IActionResult SpecificProduct(long productId)
         {
-
+            //There is no product with this Id in Database.
+            //Redirect to main page.
             if (context.Products.FirstOrDefault(p => p.Id == productId) == null)
             {
                 return RedirectToAction(nameof(AllPizzas));
             }
             return View(productId);  
-            
         }
 
         [HttpGet]

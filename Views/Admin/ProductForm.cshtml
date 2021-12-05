@@ -44,8 +44,8 @@
     </div>
 
     <div class="form-group">
-        <label for="ImagePath">Choose @ViewBag.Product image</label>
-        <input type="file"  asp-for="ImagePath" value="@Model.ImagePath" class="form-control-file" id="ImagePath">
+        <label for="ImagePath">Enter link to your @ViewBag.Product image</label>
+        <input type="text"  asp-for="ImagePath" value="@Model.ImagePath" class="form-control" id="ImagePath">
     </div>
     <button class="btn btn-success" type="submit">@( Model.Id==0 ? "Add":"Edit")</button>
 </form>

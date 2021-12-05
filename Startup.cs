@@ -56,16 +56,16 @@ namespace MaxPizzaProject
             //Admin Services.
             services.AddScoped<IAdminRepository, EFAdminRepository>();
 
+
+            services.AddScoped<ValidationClass>();
             /*By WebOptimizer we can optimize our .css code.
-            In link we will use main.css file , but in fact this file
-            are  optimized style.scss file.
+            In link we will use [name].css file , but in fact this file
+            are  optimized [name].scss file.
             */
             services.AddWebOptimizer(pipeline =>
             {
-                pipeline.AddScssBundle("css/main.css", "sass/style.scss");
                 pipeline.AddScssBundle("css/pizzas.css", "sass/pizzas.scss");
                
-
             });
 
             //Identity Service.

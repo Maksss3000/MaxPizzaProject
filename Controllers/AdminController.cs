@@ -22,9 +22,15 @@ namespace MaxPizzaProject.Controllers
         private IDrinkRepository drinkRepo;
         private IToppingRepository toppRepo;
         private ISizeRepository sizeRepo;
+        private ISnackRepository snackRepo;
 
+        private ValidationClass validation;
+        //Dependency Injection.
         public AdminController(PizzeriaDbContext ctx, IDrinkRepository drinkRep,
-                               IPizzaRepository pizzaRep, ICategoryRepository catRep, IToppingRepository topRep, ISizeRepository sizRep)
+                               IPizzaRepository pizzaRep, ICategoryRepository catRep, 
+                               IToppingRepository topRep, ISizeRepository sizRep,
+                               ValidationClass validat,
+                               ISnackRepository snackRep)
         {
             context = ctx;
             pizzaRepo = pizzaRep;
@@ -32,11 +38,13 @@ namespace MaxPizzaProject.Controllers
             drinkRepo = drinkRep;
             toppRepo = topRep;
             sizeRepo = sizRep;
+            snackRepo = snackRep;
+
+            validation = validat;
         }
 
         public IActionResult Index()
         {
-            
             return View();
         }
 
@@ -50,8 +58,7 @@ namespace MaxPizzaProject.Controllers
         [HttpGet]
         public IActionResult ChooseCategoryToEdit(string type)
         {
-     
-            
+    
             return View(catRepo.GetSpecificProductCategories(type));
         }
 
@@ -60,11 +67,8 @@ namespace MaxPizzaProject.Controllers
         {
            
             Category cat = catRepo.GetCategoryById(catId);
-            if (catRepo.GetSpecificProductCategories(cat.Type).Count() == 1)
-            {
-                ModelState.AddModelError(string.Empty, 
-                                        "You can`t Delete last existed Category of this type.");
-            }
+            validation.CategoryDeletingValidation(ModelState, cat);
+
             if (ModelState.IsValid)
             {
                 catRepo.RemoveCategory(cat);
@@ -77,6 +81,7 @@ namespace MaxPizzaProject.Controllers
         public IActionResult EditCategory(long catId)
         {
             Category category = catRepo.GetCategoryById(catId);
+            //If there is no such Category,redirect to Main Page.
             if (category == null)
             {
                 return RedirectToAction("AllPizzas", "Home");
@@ -94,18 +99,6 @@ namespace MaxPizzaProject.Controllers
                 ViewBag.ExistedSizes = null;
             }
 
-            /*
-            IEnumerable<Product> products = catRepo.GetProductsOfSpecificCategory(category.Id);
-            
-            if (products.Count() !=0)
-            {
-                ViewBag.Products = products;
-            }
-            else
-            {
-                ViewBag.Products = null;
-            }
-            */
             GetProductsOfSpecCategory(catId);
             return View("EditCategoryForm", category);
         }
@@ -128,10 +121,7 @@ namespace MaxPizzaProject.Controllers
         {
             Category category = catRepo.GetCategoryById(Id);
             //Model Check of Price.
-            if (price <= 0)
-            {
-                ModelState.AddModelError(string.Empty, "Please enter Positive Price");
-            }
+            validation.PriceValidation(ModelState,price);
             
             if(ModelState.IsValid)
             {
@@ -148,11 +138,7 @@ namespace MaxPizzaProject.Controllers
         {
             Category category = catRepo.GetCategoryById(Id);
             //Model State.
-            if (string.IsNullOrEmpty(name))
-            {
-                ModelState.AddModelError(nameof(category.Name), "Please enter category name");
-                
-            }
+            validation.CategoryNameValidation(ModelState, category, name);
             if(ModelState.IsValid)
             {
                 category.Name = name;
@@ -167,19 +153,11 @@ namespace MaxPizzaProject.Controllers
         {
          
             Size size;
-
-            if (sizeId == 0)
+            size = sizeRepo.GetSize(sizeId);
+            if (sizeId == 0|| size==null)
             {
               size= new Size();
               
-            }
-            else
-            {
-                size = sizeRepo.GetSize(sizeId);
-                if (size == null)
-                {
-                    size = new Size();
-                }
             }
 
             return View(size);
@@ -189,7 +167,7 @@ namespace MaxPizzaProject.Controllers
         public IActionResult AddOrEditSize(Size size)
         {
 
-            SizeValidation(size);
+            validation.SizeNameValidation(ModelState, size);
             
             if (ModelState.IsValid)
             {
@@ -197,26 +175,12 @@ namespace MaxPizzaProject.Controllers
                 return RedirectToAction(nameof(Index));
             }
             else
-            {
-                
+            {   
                 return View(nameof(SizeForm),size);
             }
         }
 
-        public void SizeValidation(Size size)
-        {
-            if (string.IsNullOrEmpty(size.TheSize))
-            {
-                ModelState.AddModelError(string.Empty, "Please enter size");
-            }
-
-            if (sizeRepo.GetSizeBySizeName(size.TheSize) != null)
-            {
-                ModelState.AddModelError(string.Empty, 
-                                         "This size is already existed, enter another one.");
-            }
-        }
-
+       
         [HttpGet]
         public IActionResult ProductForm (string productName,long prodId=0)
         {
@@ -248,11 +212,12 @@ namespace MaxPizzaProject.Controllers
            
             ViewBag.Product = pizza.GetType().Name;
 
-            Category category=ProductValidation(pizza);
+            Category category = validation.ProductValidation(ModelState, pizza);
           
             if (ModelState.IsValid)
             {
-                pizza.ImagePath = "img/Pizzas/" + pizza.ImagePath;
+               // pizza.ImagePath = pizza.ImagePath; 
+                    //"img/Pizzas/" + pizza.ImagePath;
                 pizza.Category = category;
                 //Add new Pizza or Updating existing one.
                 pizzaRepo.EditPizza(pizza);
@@ -271,12 +236,12 @@ namespace MaxPizzaProject.Controllers
 
             ViewBag.Product = drink.GetType().Name;
 
-            Category c = ProductValidation(drink);
+            Category category = validation.ProductValidation(ModelState, drink);
 
             if (ModelState.IsValid)
             {
-                drink.ImagePath = "img/Drinks/" + drink.ImagePath;
-                drink.Category = c;
+               // drink.ImagePath = "img/Drinks/" + drink.ImagePath;
+                drink.Category = category;
                 drinkRepo.EditDrink(drink);
 
                 return RedirectToAction("GetDrinksBySize", "Home", 
@@ -296,11 +261,11 @@ namespace MaxPizzaProject.Controllers
 
             ViewBag.Product = topping.GetType().Name;
 
-            Category category = ProductValidation(topping);
+            Category category = validation.ProductValidation(ModelState, topping);
 
             if (ModelState.IsValid)
             {
-                topping.ImagePath = "img/Toppings/" + topping.ImagePath;
+                //topping.ImagePath = "img/Toppings/" + topping.ImagePath;
                 topping.Category = category;
                 toppRepo.EditTopping(topping);
 
@@ -318,16 +283,15 @@ namespace MaxPizzaProject.Controllers
         {
             ViewBag.Product = snackProduct.GetType().Name;
 
-            Category category = ProductValidation(snackProduct);
+            Category category = validation.ProductValidation(ModelState, snackProduct);
 
             if (ModelState.IsValid)
             {
-                snackProduct.ImagePath = "img/Snacks/" + snackProduct.ImagePath;
+                //snackProduct.ImagePath = "img/Snacks/" + snackProduct.ImagePath;
                 snackProduct.Category = category;
-                //Remove to EFSnackRepo.
-                context.Snacks.Update(snackProduct);
-                context.SaveChanges();
-               // toppRepo.EditTopping(to);
+                //Add or Update Snack.
+                snackRepo.EditSnack(snackProduct);
+               
                 return RedirectToAction("AllPizzas", "Home");
             }
 
@@ -349,8 +313,8 @@ namespace MaxPizzaProject.Controllers
         public IActionResult AddCategory(Category category)
         {
             //ModelState for Category.
-            CategoryValidation(category);
-
+            validation.CategoryValidation(ModelState, category);
+          
             if (ModelState.IsValid)
             {
                 catRepo.AddCategory(category);
@@ -367,20 +331,7 @@ namespace MaxPizzaProject.Controllers
             
         }
         
-        public void CategoryValidation(Category category)
-        {
-            if (string.IsNullOrEmpty(category.Name))
-            {
-                ModelState.AddModelError(nameof(category.Name), "Please Enter Category name");
-
-            }
-
-            if (string.IsNullOrEmpty(category.Type))
-            {
-                ModelState.AddModelError(nameof(category.Type), "Please choose Type for Category");
-            }
-        }
-
+       
 
         public IActionResult SizePriceForm ()
         {
@@ -393,7 +344,8 @@ namespace MaxPizzaProject.Controllers
         [HttpPost]
         public IActionResult AddSizePriceToCategory(CategorySize newCatSize)
         {
-            SizePriceValidation(newCatSize);
+            
+            validation.SizePriceValidation(ModelState, newCatSize);
 
             if (ModelState.IsValid)
             {
@@ -443,14 +395,8 @@ namespace MaxPizzaProject.Controllers
           
             Category category = catRepo.GetCategoryById(id);
             //Validation
-            if (string.IsNullOrEmpty(sizeName))
-            {
-                ModelState.AddModelError(string.Empty, "Please choose size to add");
-            }
-            if (sizePrice <= 0)
-            {
-                ModelState.AddModelError(string.Empty, "Please enter positive price for size");
-            }
+            validation.AddNewSizeValidation(ModelState, sizeName, sizePrice);
+
             if (ModelState.IsValid)
             {
                 Size size = sizeRepo.GetSizeBySizeName(sizeName);
@@ -463,57 +409,19 @@ namespace MaxPizzaProject.Controllers
             return View("EditCategoryForm", category);
         }
 
-        public void SizePriceValidation(CategorySize categorySize)
-        {
-            if (categorySize.Size == null)
-            {
-                ModelState.AddModelError(nameof(categorySize.Size.TheSize),
-                                               "Please choose Size");
-            }
-
-            if (categorySize.Price <= 0)
-            {
-                ModelState.AddModelError(nameof(categorySize.Price), 
-                                         "Please enter positive price");
-            }
-        }
-
-        public Category ProductValidation(Product product)
-        {
-            if (string.IsNullOrEmpty(product.Name))
-            {
-                ModelState.AddModelError(nameof(product.Name), "Please Enter Product name");
-
-            }
-            
-            Category c = catRepo.GetCategoryById(product.CategoryId);
-
-            if (c == null)
-            {
-                ModelState.AddModelError(nameof(product.Category), "Please choose Product Category");
-            }
-
-            if (string.IsNullOrEmpty(product.Description))
-            {
-                ModelState.AddModelError(nameof(product.Description), "Please enter Product Discription");
-            }
-
-            return c;
-        }
-
         public IActionResult NotValid(Product product)
         {
             ViewBag.Categories = catRepo.GetSpecificProductCategories(ViewBag.Product);
-            Product p = context.Products.FirstOrDefault(p=>p.Id==product.Id);
-            if (p != null)
+            Product prod = context.Products.FirstOrDefault(p=>p.Id==product.Id);
+            if (prod != null)
             {
-                 p = context.Products.FirstOrDefault(p => p.Id == product.Id);
+                 prod = context.Products.FirstOrDefault(p => p.Id == product.Id);
             }
             else
             {
-                p = new Product();
+                prod = new Product();
             }
-            return View("ProductForm",p);
+            return View("ProductForm",prod);
         }
         
 

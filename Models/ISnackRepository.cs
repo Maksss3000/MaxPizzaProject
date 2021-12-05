@@ -19,9 +19,12 @@ namespace MaxPizzaProject.Models
 
         public Snack GetSnackById(long snackId);
 
-       // Product GetProduct(long prodId);
-       // public void EditPizza(Pizza p);
-       // public void AddPizza(Pizza p);
+        public void EditSnack(Snack snack);
+       
+
+        // Product GetProduct(long prodId);
+        // public void EditPizza(Pizza p);
+        // public void AddPizza(Pizza p);
 
         //void DeleteProduct(Product product);
     }
