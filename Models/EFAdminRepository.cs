@@ -15,6 +15,5 @@ namespace MaxPizzaProject.Models
             context = ctx;
         }
       
-
     }
 }

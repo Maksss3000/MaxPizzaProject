@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,9 +12,23 @@ namespace Advanced.Models
 {
     public class IdentitySeedData
     {
+        private static IdentityContext context;
+        //static IdentitySeedData(IdentityContext identCtx)
+        //{
+         //   context = identCtx;
+        //}
         public static void CreateAdminAccount(IServiceProvider serviceProvider,
-                                              IConfiguration configuration)
+                                              IConfiguration configuration,IdentityContext identCtx)
         {
+            context = identCtx;
+            if (context.Database.GetPendingMigrations().Any())
+            {
+
+                //Using All Waiting Migrations.(Like Update)
+                //dotnet ef database update --context [DBContext]
+                context.Database.Migrate();
+            }
+
             CreateAdminAccountAsycn(serviceProvider, configuration).Wait();
         }
 

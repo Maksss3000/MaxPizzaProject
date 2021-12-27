@@ -92,7 +92,7 @@ namespace MaxPizzaProject
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
-                              PizzeriaDbContext ctx)
+                              PizzeriaDbContext ctx,IdentityContext identCtx)
         {
             if (env.IsDevelopment())
             {
@@ -112,6 +112,7 @@ namespace MaxPizzaProject
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapControllerRoute("specificProduct", "Product/{productId:long}",
                    new { Controller = "Home", action = "SpecificProduct" });
 
@@ -125,13 +126,13 @@ namespace MaxPizzaProject
                   new { Controller = "Home", action = "SeeCart" });
 
                 endpoints.MapControllerRoute("drinks", "Drinks/{sizeName}",
-                    new { Controller = "Home", action = "GetDrinksBySize"});
+                    new { Controller = "Home", action = "GetDrinksBySize" });
 
                 endpoints.MapControllerRoute("productForm", "ProductForm/{productName}/{prodId}",
                     new { Controller = "Admin", action = "ProductForm" });
 
-               endpoints.MapControllerRoute("productForm", "ProductForm/{productName}",
-                    new { Controller = "Admin", action = "ProductForm" });
+                endpoints.MapControllerRoute("productForm", "ProductForm/{productName}",
+                     new { Controller = "Admin", action = "ProductForm" });
 
 
                 endpoints.MapControllerRoute("sizeForm", "SizeForm/{sizeId}",
@@ -146,9 +147,9 @@ namespace MaxPizzaProject
 
                 endpoints.MapRazorPages();
             });
-
-            IdentitySeedData.CreateAdminAccount(app.ApplicationServices, Configuration);
-            SeedData.Seed(ctx);
+           
+           IdentitySeedData.CreateAdminAccount(app.ApplicationServices, Configuration,identCtx);
+           SeedData.Seed(ctx);
         }
     }
 }

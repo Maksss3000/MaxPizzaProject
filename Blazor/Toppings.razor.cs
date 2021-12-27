@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MaxPizzaProject.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -8,48 +9,8 @@ namespace MaxPizzaProject.Blazor
 {
     public partial class Toppings
     {
-      
-        protected override void OnInitialized()
-        {
-            //If Product is from Snack Type.
-            if(SelectedProduct is Snack snack)
-            {
-                snack = SnackContext.GetSnackById(ProductId);
-                //Initialization of Size that selected.
-                foreach (Size s in snack.Category.Sizes.Reverse())
-                {
-                    ProductSizeId = s.Id;
-                    ProductSize = s.TheSize;
-                }
-            }
-            //If Product is from Pizza Type.
-            else if(SelectedProduct is Pizza pizza)
-            {
-                pizza = PizzaContext.GetPizzaById(ProductId);
-                //Initialization of Size that selected.
-                foreach (Size s in pizza.Category.Sizes.Reverse())
-                {
-                    ProductSizeId = s.Id;
-                    ProductSize = s.TheSize;
-                }
 
-
-                //Initialization of Topping Category that selected.
-                foreach (Category c in ToppCategories.Reverse())
-                {
-                    SelectedCatId = c.Id;
-                    SelectedToppingCategoryName = c.Name;
-                }
-
-                ToppingsOfSpecCategory = ToppContext.GetToppingsByCategory(SelectedCatId);
-
-
-            }
-
-            ProductPrice = PizzaContext.GetPizzaPrice(ProductSizeId, SelectedProduct.CategoryId);
-            TotalPrice = ProductPrice;
-
-        }
+       
 
         [Inject]
         public IToppingRepository ToppContext { get; set; }

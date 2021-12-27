@@ -31,11 +31,15 @@ namespace MaxPizzaProject.Controllers
         }
         public IActionResult Index()
         {
-            
-            return RedirectToAction(nameof(AllPizzas));
-            
+            return RedirectToAction(nameof(Max));
+           // return View("Max.cshtml");
+            //return RedirectToAction(nameof(AllPizzas)); 
         }
 
+        public IActionResult Max()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult SpecificProduct(long productId)
         {
