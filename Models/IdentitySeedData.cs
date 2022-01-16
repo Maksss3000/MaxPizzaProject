@@ -43,11 +43,11 @@ namespace Advanced.Models
             RoleManager<IdentityRole> roleManager = serviceProvider.
                                                     GetRequiredService<RoleManager<IdentityRole>>();
 
-            string username = configuration["Data:AdminUser:Name"] ?? "Admin3000";
+            string username = configuration["Data:AdminUser:Name"] ?? "*****";
 
             string email = configuration["Data:AdminUser:Email"] ?? "admin@gmail.com";
 
-            string password = configuration["Data:AdminUser:Password"] ?? "Admin3000!";
+            string password = configuration["Data:AdminUser:Password"] ?? "******";
 
             string role = configuration["Data:AdminUser:Role"] ?? "Admin";
 
