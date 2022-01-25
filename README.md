@@ -1,8 +1,5 @@
 #  Pizza Project
 ### *I am still working on this project. So I will update Readme file when I will add new features to the project.*
-**Please note ,that my Application Project is still in development mode , it`s not yet  adapted for mobile phones.**
-**Better to see it from computer screen.**
-**Link to my application on AzureWebsite [MyApplication](https://maxpizzaproject.azurewebsites.net/Home/AllPizzas)**.
 **Link to Video [UserAndAdmin](https://www.youtube.com/watch?v=jgOxgYJGAK8)**
 ### About the Project.
 
